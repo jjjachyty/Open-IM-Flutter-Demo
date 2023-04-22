@@ -4,12 +4,15 @@ import 'package:app_installer/app_installer.dart';
 import 'package:flutter_openim_widget/flutter_openim_widget.dart';
 import 'package:get/get.dart';
 import 'package:openim_demo/src/common/apis.dart';
+import 'package:openim_demo/src/common/config.dart';
+import 'package:openim_demo/src/core/controller/app_controller.dart';
 import 'package:openim_demo/src/models/upgrade_info.dart';
 import 'package:openim_demo/src/widgets/im_widget.dart';
 import 'package:openim_demo/src/widgets/loading_view.dart';
 import 'package:openim_demo/src/widgets/upgrade_view.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'data_persistence.dart';
 import 'http_util.dart';
@@ -17,17 +20,26 @@ import 'im_util.dart';
 
 class UpgradeManger {
   PackageInfo? packageInfo;
-  UpgradeInfoV2? upgradeInfoV2;
   var isShowUpgradeDialog = false;
   var isNowIgnoreUpdate = false;
   final subject = PublishSubject<double>();
+
+  // UpgradeManger() {
+  //   Get.lazyPut(() => AppController());
+  // }
 
   void closeSubject() {
     subject.close();
   }
 
+  String getLastVersion() {
+    return Platform.isAndroid
+        ? Config.clientConfigMap["android_version"]
+        : Config.clientConfigMap["ios_version"];
+  }
+
   void ignoreUpdate() {
-    DataPersistence.putIgnoreVersion(upgradeInfoV2!.buildVersion!);
+    DataPersistence.putIgnoreVersion(getLastVersion());
     Get.back();
   }
 
@@ -50,7 +62,7 @@ class UpgradeManger {
           fileName: '${packageInfo!.appName}.apk',
         );
         HttpUtil.download(
-          upgradeInfoV2!.downloadURL!,
+          Config.clientConfigMap["android_url"],
           cachePath: path,
           onProgress: (int count, int total) {
             subject.add(count / total);
@@ -61,30 +73,24 @@ class UpgradeManger {
         );
       });
     } else {
-      // if (await canLaunch(upgradeInfo!.url!)) {
-      //   launch(upgradeInfo!.url!);
-      // }
+      if (await canLaunch(Config.clientConfigMap["ios_url"])) {
+        launch(Config.clientConfigMap["ios_url"]);
+      }
     }
   }
 
   void checkUpdate() async {
-    if (!Platform.isAndroid) return;
-    LoadingView.singleton.wrap(asyncFunction: () async {
-      await getAppInfo();
-      return Apis.checkUpgradeV2();
-    }).then((value) {
-      upgradeInfoV2 = value;
-      if (!canUpdate) {
-        IMWidget.showToast('已是最新版本');
-        return;
-      }
-      Get.dialog(UpgradeViewV2(
-        upgradeInfo: upgradeInfoV2!,
-        packageInfo: packageInfo!,
-        onNow: nowUpdate,
-        subject: subject,
-      ));
-    });
+    if (!canUpdate) {
+      IMWidget.showToast('已是最新版本');
+      return;
+    }
+    Get.dialog(UpgradeViewV2(
+      needForceUpdate: true,
+      updateVersion: getLastVersion(),
+      packageInfo: packageInfo!,
+      onNow: nowUpdate,
+      subject: subject,
+    ));
   }
 
   /// 自动检测更新
@@ -92,16 +98,18 @@ class UpgradeManger {
     if (!Platform.isAndroid) return;
     if (isShowUpgradeDialog || isNowIgnoreUpdate) return;
     await getAppInfo();
-    upgradeInfoV2 = await Apis.checkUpgradeV2();
+    String lastVersion = Config.clientConfigMap['android_version'];
+
     String? ignore = DataPersistence.getIgnoreVersion();
-    if (ignore == upgradeInfoV2!.buildVersion) {
+    if (ignore == lastVersion) {
       isNowIgnoreUpdate = true;
       return;
     }
     if (!canUpdate) return;
     isShowUpgradeDialog = true;
     Get.dialog(UpgradeViewV2(
-      upgradeInfo: upgradeInfoV2!,
+      needForceUpdate: true,
+      updateVersion: getLastVersion(),
       packageInfo: packageInfo!,
       onLater: laterUpdate,
       onIgnore: ignoreUpdate,
@@ -113,7 +121,7 @@ class UpgradeManger {
   bool get canUpdate =>
       IMUtil.compareVersion(
         packageInfo!.version,
-        upgradeInfoV2!.buildVersion!,
+        getLastVersion(),
       ) <
       0;
 }

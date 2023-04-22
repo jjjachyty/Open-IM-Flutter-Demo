@@ -22,38 +22,23 @@ class PushController extends GetxController {
     if (Platform.isIOS) {
       Getuiflut().startSdk(appId: "", appKey: "", appSecret: "");
     }
-
     Getuiflut().addEventHandler(
       // 注册收到 cid 的回调
       onReceiveClientId: (String message) async {
-        print("Getui flutter onReceiveClientId: $message");
+        print("flutter onReceiveClientId: $message");
+
         _getClientId = "ClientId: $message";
-      },
-      onReceiveMessageData: (Map<String, dynamic> msg) async {
-        print("Getui flutter onReceiveMessageData: $msg");
-        _payloadInfo = msg['payload'];
-      },
-      onNotificationMessageArrived: (Map<String, dynamic> msg) async {
-        print("Getui flutter onNotificationMessageArrived: $msg");
-        _notificationState = 'Arrived';
-      },
-      onNotificationMessageClicked: (Map<String, dynamic> msg) async {
-        print("Getui flutter onNotificationMessageClicked: $msg");
-        _notificationState = 'Clicked';
       },
       // 注册 DeviceToken 回调
       onRegisterDeviceToken: (String message) async {
-        print("Getui flutter onRegisterDeviceToken: $message");
-        _getDeviceToken = "$message";
+        _getDeviceToken = "DeviceToken: $message";
       },
       // SDK收到透传消息回调
       onReceivePayload: (Map<String, dynamic> message) async {
-        print("Getui flutter onReceivePayload: $message");
         _onReceivePayload = "$message";
       },
       // 点击通知回调
       onReceiveNotificationResponse: (Map<String, dynamic> message) async {
-        print("Getui flutter onReceiveNotificationResponse: $message");
         _onReceiveNotificationResponse = "$message";
       },
       // APPLink中携带的透传payload信息
@@ -61,34 +46,112 @@ class PushController extends GetxController {
         print("Getui flutter onAppLinkPayload: $message");
         _onAppLinkPayLoad = "$message";
       },
-      // 通知服务开启\关闭回调
+      //通知服务开启\关闭回调
       onPushModeResult: (Map<String, dynamic> message) async {
-        print("Getui flutter onPushModeResult: $message");
+        print("flutter onPushModeResult: $message");
       },
       // SetTag回调
       onSetTagResult: (Map<String, dynamic> message) async {
-        print("Getui flutter onSetTagResult: $message");
+        print("flutter onSetTagResult: $message");
       },
-      // 设置别名回调
+      //设置别名回调
       onAliasResult: (Map<String, dynamic> message) async {
-        print("Getui flutter onAliasResult: $message");
+        print("flutter onAliasResult: $message");
       },
-      // 查询Tag回调
+      //查询别名回调
       onQueryTagResult: (Map<String, dynamic> message) async {
-        print("Getui flutter onQueryTagResult: $message");
+        print("flutter onQueryTagResult: $message");
       },
-      // APNs通知即将展示回调
+      //APNs通知即将展示回调
       onWillPresentNotification: (Map<String, dynamic> message) async {
-        print("Getui flutter onWillPresentNotification: $message");
+        print("flutter onWillPresentNotification: $message");
       },
-      // APNs通知设置跳转回调
+      //APNs通知设置跳转回调
       onOpenSettingsForNotification: (Map<String, dynamic> message) async {
-        print("Getui flutter onOpenSettingsForNotification: $message");
+        print("flutter onOpenSettingsForNotification: $message");
+      },
+      onGrantAuthorization: (String granted) async {
+        print("flutter onGrantAuthorization: $granted");
+      },
+      onNotificationMessageArrived: (Map<String, dynamic> event) async {
+        print("flutter onNotificationMessageArrived: $event");
+      },
+      onNotificationMessageClicked: (Map<String, dynamic> event) async {
+        print("flutter onNotificationMessageClicked: $event");
+      },
+      onReceiveMessageData: (Map<String, dynamic> event) async {
+        print("flutter onReceiveMessageData: $event");
       },
       onTransmitUserMessageReceive: (Map<String, dynamic> event) async {
-        print("Getui flutter onTransmitUserMessageReceive: $event");
+        print("flutter onTransmitUserMessageReceive: $event");
       },
     );
+    // Getuiflut().addEventHandler(
+    //   // 注册收到 cid 的回调
+    //   onReceiveClientId: (String message) async {
+    //     print("Getui flutter onReceiveClientId: $message");
+    //     _getClientId = "ClientId: $message";
+    //   },
+    //   onReceiveMessageData: (Map<String, dynamic> msg) async {
+    //     print("Getui flutter onReceiveMessageData: $msg");
+    //     _payloadInfo = msg['payload'];
+    //   },
+    //   onNotificationMessageArrived: (Map<String, dynamic> msg) async {
+    //     print("Getui flutter onNotificationMessageArrived: $msg");
+    //     _notificationState = 'Arrived';
+    //   },
+    //   onNotificationMessageClicked: (Map<String, dynamic> msg) async {
+    //     print("Getui flutter onNotificationMessageClicked: $msg");
+    //     _notificationState = 'Clicked';
+    //   },
+    //   // 注册 DeviceToken 回调
+    //   onRegisterDeviceToken: (String message) async {
+    //     print("Getui flutter onRegisterDeviceToken: $message");
+    //     _getDeviceToken = "$message";
+    //   },
+    //   // SDK收到透传消息回调
+    //   onReceivePayload: (Map<String, dynamic> message) async {
+    //     print("Getui flutter onReceivePayload: $message");
+    //     _onReceivePayload = "$message";
+    //   },
+    //   // 点击通知回调
+    //   onReceiveNotificationResponse: (Map<String, dynamic> message) async {
+    //     print("Getui flutter onReceiveNotificationResponse: $message");
+    //     _onReceiveNotificationResponse = "$message";
+    //   },
+    //   // APPLink中携带的透传payload信息
+    //   onAppLinkPayload: (String message) async {
+    //     print("Getui flutter onAppLinkPayload: $message");
+    //     _onAppLinkPayLoad = "$message";
+    //   },
+    //   // 通知服务开启\关闭回调
+    //   onPushModeResult: (Map<String, dynamic> message) async {
+    //     print("Getui flutter onPushModeResult: $message");
+    //   },
+    //   // SetTag回调
+    //   onSetTagResult: (Map<String, dynamic> message) async {
+    //     print("Getui flutter onSetTagResult: $message");
+    //   },
+    //   // 设置别名回调
+    //   onAliasResult: (Map<String, dynamic> message) async {
+    //     print("Getui flutter onAliasResult: $message");
+    //   },
+    //   // 查询Tag回调
+    //   onQueryTagResult: (Map<String, dynamic> message) async {
+    //     print("Getui flutter onQueryTagResult: $message");
+    //   },
+    //   // APNs通知即将展示回调
+    //   onWillPresentNotification: (Map<String, dynamic> message) async {
+    //     print("Getui flutter onWillPresentNotification: $message");
+    //   },
+    //   // APNs通知设置跳转回调
+    //   onOpenSettingsForNotification: (Map<String, dynamic> message) async {
+    //     print("Getui flutter onOpenSettingsForNotification: $message");
+    //   },
+    //   onTransmitUserMessageReceive: (Map<String, dynamic> event) async {
+    //     print("Getui flutter onTransmitUserMessageReceive: $event");
+    //   },
+    // );
   }
 
   /// 初始化个推sdk

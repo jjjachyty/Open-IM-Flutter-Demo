@@ -18,7 +18,7 @@ class SplashLogic extends GetxController {
 
   String? get uid => loginCertificate?.userID;
 
-  String? get token => loginCertificate?.imToken;
+  String? get token => loginCertificate?.token;
 
   late StreamSubscription initializedSub;
 

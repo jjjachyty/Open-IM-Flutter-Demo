@@ -18,8 +18,7 @@ import 'config.dart';
 class Apis {
   static int get _platform =>
       Platform.isAndroid ? IMPlatform.android : IMPlatform.ios;
-  static final openIMMemberIDS = [
-  ];
+  static final openIMMemberIDS = [];
   static final openIMGroupID = '082cad15fd27a2b6b875370e053ccd79';
 
   /// login
@@ -270,6 +269,7 @@ class Apis {
       },
     );
   }
+
   static Future<UpgradeInfoV2> checkUpgradeV2() {
     return dio.post<Map<String, dynamic>>(
       'https://www.pgyer.com/apiv2/app/check',
@@ -391,8 +391,8 @@ class Apis {
     return DateTime.now().millisecondsSinceEpoch.toString();
   }
 
-  static Options get chatTokenOptions => Options(
-      headers: {'token': DataPersistence.getLoginCertificate()!.chatToken});
+  static Options get chatTokenOptions =>
+      Options(headers: {'token': DataPersistence.getLoginCertificate()!.token});
 
   /// discoverPageURL
   /// ordinaryUserAddFriend,

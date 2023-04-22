@@ -1,12 +1,18 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_openim_widget/flutter_openim_widget.dart';
 import 'package:get/get.dart';
+import 'package:openim_demo/src/core/controller/im_controller.dart';
 
 class MyGroupNicknameLogic extends GetxController {
+  late Rx<GroupInfo> info;
+  var imLogic = Get.find<IMController>();
+
   var nicknameCtrl = TextEditingController();
   var enabled = false.obs;
 
   @override
   void onInit() {
+    info = Rx(Get.arguments);
     nicknameCtrl.addListener(() {
       enabled.value = nicknameCtrl.text.trim().isNotEmpty;
     });
@@ -17,7 +23,13 @@ class MyGroupNicknameLogic extends GetxController {
     nicknameCtrl.clear();
   }
 
-  void modifyMyNickname() {}
+  void modifyMyNickname() async {
+    await OpenIM.iMManager.groupManager.setGroupMemberNickname(
+        groupID: info.value.groupID,
+        userID: OpenIM.iMManager.uid,
+        groupNickname: nicknameCtrl.text);
+    Get.back();
+  }
 
   @override
   void onReady() {

@@ -226,11 +226,13 @@ class EnterpriseTitleBar extends StatelessWidget
   EnterpriseTitleBar.chatTitle({
     String? title,
     String? subTitle,
+    bool? isLiving,
     double? height,
     String? leftButton,
     Function()? onClickCallBtn,
     Function()? onClickMoreBtn,
     Function()? onClose,
+    Function()? goLiving,
     Color? backgroundColor,
     bool showOnlineStatus = false,
     bool online = false,
@@ -268,13 +270,13 @@ class EnterpriseTitleBar extends StatelessWidget
         right = Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            TitleImageButton(
-              imageStr: ImageRes.ic_call,
-              imageWidth: 25.w,
-              imageHeight: 24.h,
-              onTap: onClickCallBtn,
-              // height: 44.h,
-            ),
+            // TitleImageButton(
+            //   imageStr: ImageRes.ic_call,
+            //   imageWidth: 25.w,
+            //   imageHeight: 24.h,
+            //   onTap: onClickCallBtn,
+            //   // height: 44.h,
+            // ),
             TitleImageButton(
               imageStr: ImageRes.ic_more,
               imageWidth: 20.w,
@@ -288,11 +290,26 @@ class EnterpriseTitleBar extends StatelessWidget
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            if (null != title)
-              Text(
-                title,
-                style: PageStyle.ts_333333_18sp,
-              ),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (isLiving ?? false)
+                  new SizedBox(
+                      height: 44.h,
+                      child: new IconButton(
+                        padding: new EdgeInsets.all(0.0),
+                        icon: Image.asset("assets/images/living.gif",
+                            height: 15, width: 15),
+                        onPressed: goLiving,
+                      )),
+                if (null != title)
+                  Text(
+                    title,
+                    style: PageStyle.ts_333333_18sp,
+                  ),
+              ],
+            ),
             if (null != subTitle && subTitle.isNotEmpty)
               Row(
                 mainAxisSize: MainAxisSize.min,
@@ -634,7 +651,6 @@ class EnterpriseTitleBar extends StatelessWidget
           )
         ],
       );*/
-
 }
 
 class TitleImageButton extends StatelessWidget {

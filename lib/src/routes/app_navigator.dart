@@ -259,6 +259,13 @@ class AppNavigator {
     Get.toNamed(AppRoutes.MY_ID);
   }
 
+  static void startWatchLiving({required String gid, required String uid}) {
+    Get.toNamed(AppRoutes.WATCH_LIVING, arguments: {
+      'gid': gid,
+      'uid': uid,
+    });
+  }
+
   static void startSetUserName() {
     Get.toNamed(AppRoutes.SETUP_USER_NAME);
   }
@@ -279,8 +286,10 @@ class AppNavigator {
     Get.toNamed(AppRoutes.GROUP_NAME_SETUP, arguments: info);
   }
 
-  static void startModifyMyNicknameInGroup() {
-    Get.toNamed(AppRoutes.MY_GROUP_NICKNAME);
+  static void startModifyMyNicknameInGroup({
+    required GroupInfo info,
+  }) {
+    Get.toNamed(AppRoutes.MY_GROUP_NICKNAME, arguments: info);
   }
 
   static void startEditAnnouncement({required GroupInfo info}) {

@@ -39,8 +39,8 @@ class GroupMemberListPage extends StatelessWidget {
                       var disabled =
                           logic.defaultCheckedUidList.contains(data.userID);
                       return InkWell(
-                        onTap:
-                            disabled ? null : () => logic.selectedMember(index),
+                        // onTap:
+                        //     disabled ? null : () => logic.selectedMember(index),
                         child: buildAzListItemView(
                           isMultiModel: logic.isMultiModel(),
                           name: data.nickname!,

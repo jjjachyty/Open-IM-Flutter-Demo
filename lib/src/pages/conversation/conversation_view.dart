@@ -71,6 +71,7 @@ class ConversationPage extends StatelessWidget {
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) => ConversationItemView(
+                isLiving: true,
                 onTap: () => logic.toChat(index),
                 avatarUrl: logic.getAvatar(index),
                 title: logic.getShowName(index),
@@ -134,13 +135,13 @@ class ConversationPage extends StatelessWidget {
       );
 
   List<Widget> _buildActions() => [
-        TitleImageButton(
-          imageStr: ImageRes.ic_callBlack,
-          imageHeight: 23.h,
-          imageWidth: 23.w,
-          // height: 50.h,
-          onTap: () => logic.toViewCallRecords(),
-        ),
+        // TitleImageButton(
+        //   imageStr: ImageRes.ic_callBlack,
+        //   imageHeight: 23.h,
+        //   imageWidth: 23.w,
+        //   // height: 50.h,
+        //   onTap: () => logic.toViewCallRecords(),
+        // ),
         PopButton(
           popCtrl: logic.popCtrl,
           menuBgColor: Color(0xFFFFFFFF),
@@ -175,6 +176,11 @@ class ConversationPage extends StatelessWidget {
               icon: ImageRes.ic_popLaunchGroup,
               onTap: () => logic.createGroup(),
             ),
+            // PopMenuInfo(
+            //   text: StrRes.meeting,
+            //   icon: ImageRes.ic_popLaunchGroup,
+            //   onTap: () => logic.startMeeting(),
+            // ),
           ],
           child: TitleImageButton(
             imageStr: ImageRes.ic_addBlack,

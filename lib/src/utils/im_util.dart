@@ -14,6 +14,7 @@ import 'package:flutter_openim_widget/flutter_openim_widget.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:lpinyin/lpinyin.dart';
 import 'package:mime_type/mime_type.dart';
 import 'package:open_file/open_file.dart';
@@ -27,13 +28,16 @@ import 'package:sprintf/sprintf.dart';
 
 import 'http_util.dart';
 
+AudioPlayer player = AudioPlayer();
+
 /// 间隔时间完成某事
 class IntervalDo {
   DateTime? last;
 
   void run({required Function() fuc, int milliseconds = 0}) {
     DateTime now = DateTime.now();
-    if (null == last || now.difference(last ?? now).inMilliseconds > milliseconds) {
+    if (null == last ||
+        now.difference(last ?? now).inMilliseconds > milliseconds) {
       last = now;
       fuc();
     }
@@ -165,6 +169,11 @@ class IMUtil {
             ));
   }
 
+  static void openVoice(Message msg) async {
+    await player.setUrl(msg.soundElem!.sourceUrl!);
+    await player.play();
+  }
+
   static void openFile(
     Message msg, {
     Future Function(String url, String path)? onDownload,
@@ -176,7 +185,8 @@ class IMUtil {
       var url = fileElem.sourceUrl;
       var fileName = fileElem.fileName;
       var fileSize = fileElem.fileSize;
-      var cachePath = '${(await getTemporaryDirectory()).path}/${msg.clientMsgID}_$fileName';
+      var cachePath =
+          '${(await getTemporaryDirectory()).path}/${msg.clientMsgID}_$fileName';
       print('cachePath:$cachePath');
       // 原路径
       var isExitSourcePath = await isExitFile(sourcePath);
@@ -286,11 +296,13 @@ class IMUtil {
         },
         onDownloadFinished: (url, path) async {
           final result = await ImageGallerySaver.saveFile(path);
-          IMWidget.showToast(sprintf(StrRes.picSaveToPath, [result['filePath']]));
+          IMWidget.showToast(
+              sprintf(StrRes.picSaveToPath, [result['filePath']]));
         },
       );
 
-  static Widget _previewVideo({String? path, String? url, String? coverUrl, String? tag}) =>
+  static Widget _previewVideo(
+          {String? path, String? url, String? coverUrl, String? tag}) =>
       ChatVideoPlayerView(
         path: path,
         url: url,
@@ -301,7 +313,8 @@ class IMUtil {
         },
         onDownloadFinished: (url, path) async {
           final result = await ImageGallerySaver.saveFile(path);
-          IMWidget.showToast(sprintf(StrRes.videoSaveToPath, [result['filePath']]));
+          IMWidget.showToast(
+              sprintf(StrRes.videoSaveToPath, [result['filePath']]));
         },
       );
 
@@ -320,7 +333,8 @@ class IMUtil {
           bool isAtSelf = text.contains('@${OpenIM.iMManager.uid} ');
           // bool isAtSelf = map['isAtSelf'];
           if (isAtSelf == true) {
-            content = '@${StrRes.you}${text.replaceAll('@${OpenIM.iMManager.uid}', '')}';
+            content =
+                '@${StrRes.you}${text.replaceAll('@${OpenIM.iMManager.uid}', '')}';
           }
         } catch (e) {}
         break;
@@ -367,8 +381,8 @@ class IMUtil {
   }
 
   static bool isMobile(String mobile) {
-    RegExp exp =
-        RegExp(r'^((13[0-9])|(14[0-9])|(15[0-9])|(16[0-9])|(17[0-9])|(18[0-9])|(19[0-9]))\d{8}$');
+    RegExp exp = RegExp(
+        r'^((13[0-9])|(14[0-9])|(15[0-9])|(16[0-9])|(17[0-9])|(18[0-9])|(19[0-9]))\d{8}$');
     return exp.hasMatch(mobile);
   }
 
@@ -479,9 +493,10 @@ class IMUtil {
     required String dir,
     required String fileName,
   }) async {
-    var path =
-        (Platform.isIOS ? await getTemporaryDirectory() : await getExternalStorageDirectory())
-            ?.path;
+    var path = (Platform.isIOS
+            ? await getTemporaryDirectory()
+            : await getExternalStorageDirectory())
+        ?.path;
     File file = File('$path/$dir/$fileName');
     if (!(await file.exists())) {
       file.create(recursive: true);
@@ -507,7 +522,6 @@ class IMUtil {
     }
     return diff;
   }
-
 
   static int _platform = -9;
 

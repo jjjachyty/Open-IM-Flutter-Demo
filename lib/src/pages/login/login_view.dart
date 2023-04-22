@@ -47,7 +47,7 @@ class LoginPage extends StatelessWidget {
                   left: 40.w,
                   width: 295.w,
                   child: Obx(() => PhoneInputBox(
-                        controller: logic.phoneCtrl,
+                        controller: logic.emailCtrl,
                         labelStyle: PageStyle.ts_171A1D_14sp,
                         hintStyle: PageStyle.ts_171A1D0_opacity40p_17sp,
                         textStyle: PageStyle.ts_171A1D_17sp,
@@ -57,7 +57,7 @@ class LoginPage extends StatelessWidget {
                         code: logic.areaCode.value,
                         onAreaCode: () => logic.openCountryCodePicker(),
                         showClearBtn: logic.showAccountClearBtn.value,
-                        inputWay: InputWay.phone,
+                        inputWay: InputWay.email,
                       )),
                 ),
                 Positioned(

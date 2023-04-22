@@ -10,12 +10,11 @@ class Urls {
   static var userOnlineStatus =
       "${Config.imApiUrl()}/user/get_users_online_status";
   static var queryAllUsers = "${Config.imApiUrl()}/manager/get_all_users_uid";
-  static var updateUserInfo = "${Config.appAuthUrl()}/user/update_user_info";
+  static var updateUserInfo = "${Config.imApiUrl()}/user/update_user_info";
   static var getUsersFullInfo =
       "${Config.appAuthUrl()}/user/get_users_full_info";
   static var searchUserFullInfo =
       "${Config.appAuthUrl()}/user/search_users_full_info";
-
 
   /// 登录注册是独立于im的业务
   static var getVerificationCode = "${Config.appAuthUrl()}/account/code";
@@ -26,7 +25,5 @@ class Urls {
   static var login = "${Config.appAuthUrl()}/account/login";
   static var upgrade = "${Config.appAuthUrl()}/app/check";
 
-
-  static final getClientConfig =
-      '${Config.chatTokenUrl()}/admin/init/get_client_config';
+  static final getClientConfig = '${Config.imApiUrl()}/init/get_client_config';
 }

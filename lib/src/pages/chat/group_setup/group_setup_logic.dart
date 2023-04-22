@@ -80,7 +80,8 @@ class GroupSetupLogic extends GetxController {
   }
 
   void modifyMyGroupNickname() {
-    AppNavigator.startModifyMyNicknameInGroup();
+    print("$myGroupNickname");
+    AppNavigator.startModifyMyNicknameInGroup(info: info.value);
     // Get.toNamed(AppRoutes.MY_GROUP_NICKNAME);
   }
 

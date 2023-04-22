@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: io.openim:core-sdk:2.3.5-t34@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/b41188fb2dc6b882e07d1e2181a55139/transformed/jetified-core-sdk-2.3.5-t34/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/b41188fb2dc6b882e07d1e2181a55139/transformed/jetified-core-sdk-2.3.5-t34/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

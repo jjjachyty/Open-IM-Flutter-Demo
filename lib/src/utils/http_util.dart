@@ -28,7 +28,7 @@ class HttpUtil {
         requestBody: true,
         responseHeader: true,
       ))
-    // ..interceptors.add(HttpFormatter())
+      // ..interceptors.add(HttpFormatter())
       ..interceptors.add(InterceptorsWrapper(onRequest: (options, handler) {
         // Do something before request is sent
         return handler.next(options); //continue
@@ -102,7 +102,7 @@ class HttpUtil {
       "${Config.imApiUrl()}/third/tencent_cloud_storage_credential",
       data: {'operationID': '${DateTime.now().millisecondsSinceEpoch}'},
       options: Options(
-        headers: {'token': DataPersistence.getLoginCertificate()?.imToken},
+        headers: {'token': DataPersistence.getLoginCertificate()?.token},
       ),
     );
     var data = resp.data;
@@ -156,7 +156,7 @@ class HttpUtil {
       "${Config.imApiUrl()}/third/minio_upload",
       data: formData,
       options: Options(
-        headers: {'token': DataPersistence.getLoginCertificate()?.imToken},
+        headers: {'token': DataPersistence.getLoginCertificate()?.token},
       ),
     );
     return resp.data?['data']['URL'];

@@ -32,7 +32,7 @@ class LoginLogic extends GetxController {
   var imLogic = Get.find<IMController>();
   var pushLogic = Get.find<PushController>();
   var enabledLoginButton = false.obs;
-  var index = 0.obs;
+  var index = 1.obs;
   var areaCode = "+86".obs;
   var loginType = LoginType.password.obs;
 
@@ -71,8 +71,8 @@ class LoginLogic extends GetxController {
       await DataPersistence.putLoginCertificate(data);
       await DataPersistence.putAccount(account);
       print(
-          '---------login---------- uid: ${data.userID}, token: ${data.imToken}');
-      await imLogic.login(data.userID, data.imToken);
+          '---------login---------- uid: ${data.userID}, token: ${data.token}');
+      await imLogic.login(data.userID, data.token);
       print('---------im login success-------');
       pushLogic.login(data.userID);
       print('---------jpush login success----');
@@ -191,14 +191,22 @@ class LoginLogic extends GetxController {
   }
 
   Future<bool> getVerificationCode() async {
+    final String regexEmail =
+        "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*\$";
+    if (emailCtrl.text.isEmpty ||
+        !new RegExp(regexEmail).hasMatch(emailCtrl.text)) {
+      IMWidget.showToast(StrRes.emailInvalid);
+      return false;
+    }
+
     try {
-      // await LoadingView.singleton.wrap(
-      //     asyncFunction: () => Apis.requestVerificationCode(
-      //           areaCode: areaCode.value,
-      //           phoneNumber: index.value == 0 ? phoneCtrl.text : null,
-      //           email: index.value == 1 ? emailCtrl.text : null,
-      //           usedFor: 3,
-      //         ));
+      await LoadingView.singleton.wrap(
+          asyncFunction: () => Apis.requestVerificationCode(
+                // areaCode: areaCode.value,
+                // phoneNumber: index.value == 0 ? phoneCtrl.text : null,
+                email: emailCtrl.text,
+                usedFor: 3,
+              ));
       IMWidget.showToast(StrRes.sendSuccessfully);
       return true;
     } catch (e) {

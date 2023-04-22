@@ -49,7 +49,7 @@ class ChatPage extends StatelessWidget {
         },
         visibilityChange: (context, index, message, visible) {
           print('visible:$index $visible');
-          logic.markC2CMessageAsRead(index, message, visible);
+          // logic.markC2CMessageAsRead(index, message, visible);
         },
         onLongPressLeftAvatar: () {
           logic.onLongPressLeftAvatar(index);
@@ -92,8 +92,8 @@ class ChatPage extends StatelessWidget {
             onTap: logic.clickLinkText,
           ),
         ],
-        customItemBuilder: _buildCustomItemView,
-        enabledReadStatus: logic.enabledReadStatus(index),
+        customItemBuilder: null,
+        enabledReadStatus: false, //logic.enabledReadStatus(index),
       );
 
   @override
@@ -107,6 +107,8 @@ class ChatPage extends StatelessWidget {
                   appBar: EnterpriseTitleBar.chatTitle(
                     title: logic.name.value,
                     subTitle: logic.getSubTile(),
+                    isLiving: true, //logic.isLiving.value,
+                    goLiving: logic.goWatchLiving,
                     onClickCallBtn: () => logic.call(),
                     onClickMoreBtn: () => logic.chatSetup(),
                     leftButton: logic.multiSelMode.value ? StrRes.cancel : null,
@@ -124,7 +126,8 @@ class ChatPage extends StatelessWidget {
                             itemCount: logic.messageList.length,
                             controller: logic.autoCtrl,
                             onLoad: () => logic.getHistoryMsgList(),
-                            itemBuilder: (_, index) => Obx(() => _itemView(index)),
+                            itemBuilder: (_, index) =>
+                                Obx(() => _itemView(index)),
                           ),
                         ),
                         ChatInputBoxView(
@@ -159,7 +162,9 @@ class ChatPage extends StatelessWidget {
                           onClearQuote: () => logic.setQuoteMsg(-1),
                           multiMode: logic.multiSelMode.value,
                           focusNode: logic.focusNode,
-                          inputFormatters: [AtTextInputFormatter(logic.openAtList)],
+                          inputFormatters: [
+                            AtTextInputFormatter(logic.openAtList)
+                          ],
                         ),
                       ],
                     ),
@@ -193,7 +198,9 @@ class ChatPage extends StatelessWidget {
       Row(
         children: [
           Image.asset(
-            type == 'voice' ? ImageRes.ic_voiceCallMsg : ImageRes.ic_videoCallMsg,
+            type == 'voice'
+                ? ImageRes.ic_voiceCallMsg
+                : ImageRes.ic_videoCallMsg,
             width: 20.h,
             height: 20.h,
           ),

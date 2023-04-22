@@ -53,10 +53,12 @@ abstract class AppRoutes {
   static const LANGUAGE_SETUP = "/language_setup";
   static const SEARCH_ADD_GROUP = "/search_add_group";
   static const APPLY_ENTER_GROUP = "/apply_enter_group";
+
   static const GROUP_APPLICATION = "/group_application";
   static const HANDLE_GROUP_APPLICATION = "/handle_group_application";
   static const ORGANIZATION = "/organization";
   static const FORGET_PASSWORD = "/forget_password";
+  static const WATCH_LIVING = "/watch_live";
 }
 
 extension RoutesExtension on String {

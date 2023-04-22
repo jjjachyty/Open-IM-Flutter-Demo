@@ -75,7 +75,7 @@ class SetupSelfInfoLogic extends GetxController {
     await DataPersistence.putLoginCertificate(data);
     await DataPersistence.putAccount(account);
     var uid = data.userID;
-    var token = data.imToken;
+    var token = data.token;
     print('---------login---------- uid: $uid, token: $token');
     await imLogic.login(uid, token);
     await syncSelfInfo(uid);

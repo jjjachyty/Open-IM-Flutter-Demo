@@ -91,19 +91,19 @@ class ServerConfigPage extends StatelessWidget {
                 label: '登录注册服务器地址',
                 // hintText: Config.appAuthUrl(),
                 controller: logic.authCtrl,
-                enabled: false,
+                enabled: true,
               ),
               _buildItemField(
                 label: 'IM API服务器地址',
                 // hintText: Config.imApiUrl(),
                 controller: logic.imApiCtrl,
-                enabled: false,
+                enabled: true,
               ),
               _buildItemField(
                 label: 'IM WS地址',
                 // hintText: Config.imWsUrl(),
                 controller: logic.imWsCtrl,
-                enabled: false,
+                enabled: true,
               ),
               GestureDetector(
                 onTap: logic.showObjectStorageSheet,

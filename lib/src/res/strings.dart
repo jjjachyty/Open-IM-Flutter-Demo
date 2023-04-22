@@ -270,6 +270,8 @@ class StrRes {
 
   static get launchGroup => 'launchGroup'.tr;
 
+  static get meeting => 'meeting'.tr;
+
   static get myQrcode => 'myQrcode'.tr;
 
   static get inviteScan => 'inviteScan'.tr;
@@ -291,6 +293,8 @@ class StrRes {
   static get sendSuccessfully => 'sendSuccessfully'.tr;
 
   static get sendFailed => 'sendFailed'.tr;
+
+  static get emailInvalid => 'emailInvalid'.tr;
 
   static get friendRequests => 'friendRequests'.tr;
 
@@ -621,6 +625,8 @@ class StrRes {
   static get iKnow => 'iKnow'.tr;
 
   static get workbench => 'workbench'.tr;
+
+  static get project => 'project'.tr;
 
   static get callDuration => 'callDuration'.tr;
 

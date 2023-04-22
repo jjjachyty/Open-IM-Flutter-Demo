@@ -63,8 +63,11 @@ import 'package:openim_demo/src/pages/forget_password/forget_password_binding.da
 import 'package:openim_demo/src/pages/forget_password/forget_password_view.dart';
 import 'package:openim_demo/src/pages/home/home_binding.dart';
 import 'package:openim_demo/src/pages/home/home_view.dart';
+import 'package:openim_demo/src/pages/living/living_binding.dart';
+import 'package:openim_demo/src/pages/living/watch_living.dart';
 import 'package:openim_demo/src/pages/login/login_binding.dart';
 import 'package:openim_demo/src/pages/login/login_view.dart';
+import 'package:openim_demo/src/pages/living/screen_sharing.dart';
 import 'package:openim_demo/src/pages/mine/about_us/about_us_binding.dart';
 import 'package:openim_demo/src/pages/mine/about_us/about_us_view.dart';
 import 'package:openim_demo/src/pages/mine/account_setup/account_setup_binding.dart';
@@ -239,6 +242,11 @@ class AppPages {
     //   page: () => CallPage(),
     //   binding: CallBinding(),
     // ),
+    GetPage(
+      name: AppRoutes.WATCH_LIVING,
+      page: () => WatchLivingPage(),
+      binding: LivingBinding(),
+    ),
     GetPage(
       name: AppRoutes.CREATE_GROUP_IN_CHAT_SETUP,
       page: () => CreateGroupInChatSetupPage(),

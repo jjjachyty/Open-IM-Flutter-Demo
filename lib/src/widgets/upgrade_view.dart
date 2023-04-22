@@ -15,7 +15,9 @@ class UpgradeViewV2 extends StatefulWidget {
   final Function()? onLater;
   final Function()? onIgnore;
   final Function() onNow;
-  final UpgradeInfoV2 upgradeInfo;
+  final String updateVersion;
+  final bool needForceUpdate;
+  final String? buildUpdateDescription;
   final PackageInfo packageInfo;
   final PublishSubject? subject;
 
@@ -24,7 +26,9 @@ class UpgradeViewV2 extends StatefulWidget {
     this.onLater,
     this.onIgnore,
     required this.onNow,
-    required this.upgradeInfo,
+    required this.updateVersion,
+    required this.needForceUpdate,
+    this.buildUpdateDescription,
     required this.packageInfo,
     this.subject,
   }) : super(key: key);
@@ -54,9 +58,9 @@ class _UpgradeViewV2State extends State<UpgradeViewV2> {
         _showProgress = true;
       });
     } else {
-      if (!widget.upgradeInfo.needForceUpdate!) {
-        Get.back();
-      }
+      // if (!widget.upgradeInfo.needForceUpdate!) {
+      //   Get.back();
+      // }
     }
     widget.onNow.call();
   }
@@ -65,7 +69,7 @@ class _UpgradeViewV2State extends State<UpgradeViewV2> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        return !widget.upgradeInfo.needForceUpdate!;
+        return !widget.needForceUpdate;
       },
       child: Center(
         child: Container(
@@ -94,10 +98,8 @@ class _UpgradeViewV2State extends State<UpgradeViewV2> {
                 height: 10.h,
               ),
               Text(
-                sprintf(StrRes.upgradeVersion, [
-                  widget.upgradeInfo.buildVersion,
-                  widget.packageInfo.version
-                ]),
+                sprintf(StrRes.upgradeVersion,
+                    [widget.updateVersion, widget.packageInfo.version]),
                 style: PageStyle.ts_333333_14sp,
               ),
               SizedBox(
@@ -115,13 +117,13 @@ class _UpgradeViewV2State extends State<UpgradeViewV2> {
                 height: 4.h,
               ),
               Text(
-                widget.upgradeInfo.buildUpdateDescription ?? '',
+                widget.buildUpdateDescription ?? '',
                 style: PageStyle.ts_333333_14sp,
               ),
               SizedBox(
                 height: 10.h,
               ),
-              if (!widget.upgradeInfo.needForceUpdate! && !_showProgress)
+              if (!widget.needForceUpdate && !_showProgress)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -139,7 +141,7 @@ class _UpgradeViewV2State extends State<UpgradeViewV2> {
                     ),
                   ],
                 ),
-              if (widget.upgradeInfo.needForceUpdate! && !_showProgress)
+              if (widget.needForceUpdate && !_showProgress)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [

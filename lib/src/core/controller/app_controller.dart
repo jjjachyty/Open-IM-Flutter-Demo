@@ -7,6 +7,7 @@ import 'package:flutter_openim_sdk/flutter_openim_sdk.dart' as im;
 import 'package:flutter_openim_widget/flutter_openim_widget.dart';
 import 'package:get/get.dart';
 import 'package:openim_demo/src/res/strings.dart';
+import 'package:openim_demo/src/common/config.dart';
 import 'package:openim_demo/src/utils/data_persistence.dart';
 import 'package:openim_demo/src/utils/upgrade_manager.dart';
 import 'package:rxdart/rxdart.dart';
@@ -180,10 +181,10 @@ class AppController extends GetxController with UpgradeManger {
   }
 
   @override
-  void onReady() {
-    _queryClientConfig();
+  Future<void> onReady() async {
+    await _queryClientConfig();
     // _startForegroundService();
-    autoCheckVersionUpgrade();
+    autoCheckVersionUpgrade(); //TODO: 版本检查更新
     super.onReady();
   }
 
@@ -214,8 +215,8 @@ class AppController extends GetxController with UpgradeManger {
     return show;
   }
 
-  void _queryClientConfig() async {
+  Future<void> _queryClientConfig() async {
     final map = await Apis.getClientConfig();
-    clientConfigMap.assignAll(map);
+    Config.clientConfigMap = map;
   }
 }

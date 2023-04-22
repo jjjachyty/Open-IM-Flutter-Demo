@@ -27,7 +27,7 @@ class HomePage extends StatelessWidget {
                   children: [
                     ConversationPage(),
                     ContactsPage(),
-                    // WorkbenchPage(),
+                    WorkbenchPage(),
                     MinePage(),
                   ],
                 ),
@@ -54,15 +54,15 @@ class HomePage extends StatelessWidget {
                     onClick: (i) => logic.switchTab(i),
                     count: logic.unhandledCount.value,
                   ),
-                  // BottomBarItem(
-                  //   selectedImgRes: ImageRes.ic_tabWorkSel,
-                  //   unselectedImgRes: ImageRes.ic_tabWorkNor,
-                  //   label: StrRes.workbench,
-                  //   imgWidth: 22.w,
-                  //   imgHeight: 23.h,
-                  //   onClick: (i) => logic.switchTab(i),
-                  //   // count: logic.unhandledCount.value,
-                  // ),
+                  BottomBarItem(
+                    selectedImgRes: ImageRes.ic_tabWorkSel,
+                    unselectedImgRes: ImageRes.ic_tabWorkNor,
+                    label: StrRes.workbench,
+                    imgWidth: 22.w,
+                    imgHeight: 23.h,
+                    onClick: (i) => logic.switchTab(i),
+                    // count: logic.unhandledCount.value,
+                  ),
                   BottomBarItem(
                     selectedImgRes: ImageRes.ic_tabMineSel,
                     unselectedImgRes: ImageRes.ic_tabMineNor,

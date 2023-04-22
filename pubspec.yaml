@@ -82,13 +82,19 @@ dependencies:
   flutter_cupertino_datetime_picker: 3.0.0
   device_info_plus: 6.0.0
   dart_date: ^1.1.1
-  getuiflut: 0.2.14
+  getuiflut: ^0.2.18
 #  flutter_openim_widget: 2.3.0
   flutter_openim_widget:
-    git:
-      url: https://github.com/hrxiang/flutter_openim_widget.git
-      ref: 2.3.5+3
-#    path: ../flutter_openim_widget
+    path: ../flutter_openim_widget
+    # git:
+    #   url: https://github.com/jjjachyty/flutter_openim_widget.git
+    #   ref: master
+  agora_rtc_engine: 6.1.0
+    # git:
+    #   url: https://github.com/AgoraIO-Extensions/Agora-Flutter-SDK.git
+    #   ref: main
+  just_audio: ^0.9.32
+  agora_rtm: ^1.5.0
 
 dev_dependencies:
   flutter_test:

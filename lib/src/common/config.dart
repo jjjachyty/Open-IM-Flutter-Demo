@@ -35,16 +35,17 @@ class Config {
   }
 
   static late String cachePath;
-
-  static const UI_W = 375.0;
-  static const UI_H = 812.0;
+  // //初始化配置版本等信息
+  static late Map<String, dynamic> clientConfigMap;
+  static const UI_W = 414.0;
+  static const UI_H = 896.0;
 
   /// 默认公司配置
   static final String deptName = "";
   static final String deptID = '0';
 
   /// 全局字体size在原有ui上增大1.2倍
-  static final double textScaleFactor = 1.1;
+  static final double textScaleFactor = 1;
 
   /// 秘钥
   static const secret = 'tuoyun';
@@ -52,7 +53,7 @@ class Config {
   /// ip
   /// web.rentsoft.cn
   /// test-web.rentsoft.cn
-  static const host = "web.rentsoft.cn";
+  static const host = "88.218.195.133";
 
   static bool get isIP => RegexUtil.isIP(host);
 
@@ -83,7 +84,7 @@ class Config {
   }
 
   /// 登录注册手机验 证服务器地址
-  /// $apiScheme://$host/chat/
+  /// $apiScheme://$host/demo/
   /// $apiScheme://$host:10008
   /// 端口：10008
   static String appAuthUrl() {
@@ -93,7 +94,7 @@ class Config {
       url = server['authUrl'];
       print('缓存authUrl: $url');
     }
-    return url ?? (isIP ? "http://$host:10008" : "https://$host/chat");
+    return url ?? (isIP ? "http://$host:10004" : "https://$host/demo");
   }
 
   /// IM sdk api地址

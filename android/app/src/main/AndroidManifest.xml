@@ -41,6 +41,8 @@
 
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
 
+    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" tools:ignore="ProtectedPermissions" />
+
     <!-- Provide required visibility configuration for API level 30 and above -->
     <queries>
         <intent>
@@ -61,7 +63,7 @@
         tools:replace="android:label"
         android:requestLegacyExternalStorage="true"
         android:usesCleartextTraffic="true"
-        android:label="OpenIM">
+        android:label="Push131">
         <!--android:showWhenLocked="true"-->
         <activity
             android:name=".MainActivity"
