@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:openim_demo/src/res/images.dart';
 import 'package:openim_demo/src/res/strings.dart';
 import 'package:openim_demo/src/res/styles.dart';
 import 'package:openim_demo/src/widgets/button.dart';
@@ -21,12 +22,12 @@ class LoginPage extends StatelessWidget {
       child: Scaffold(
         body: SingleChildScrollView(
           child: Container(
-            // decoration: BoxDecoration(
-            //   image: DecorationImage(
-            //     image: AssetImage(ImageRes.ic_loginBg),
-            //     fit: BoxFit.cover,
-            //   ),
-            // ),
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(ImageRes.ic_loginBg),
+                fit: BoxFit.cover,
+              ),
+            ),
             height: 1.sh,
             child: Stack(
               children: [
@@ -38,157 +39,112 @@ class LoginPage extends StatelessWidget {
                     behavior: HitTestBehavior.translucent,
                     child: Text(
                       StrRes.welcomeUse,
-                      style: PageStyle.ts_171A1D_32sp_semibold,
+                      style: TextStyle(color: Colors.white, fontSize: 32.sp),
                     ),
                   ),
                 ),
-                Positioned(
-                  top: 260.h,
-                  left: 40.w,
-                  width: 295.w,
-                  child: Obx(() => PhoneInputBox(
-                        controller: logic.emailCtrl,
-                        labelStyle: PageStyle.ts_171A1D_14sp,
-                        hintStyle: PageStyle.ts_171A1D0_opacity40p_17sp,
-                        textStyle: PageStyle.ts_171A1D_17sp,
-                        codeStyle: PageStyle.ts_171A1D_17sp,
-                        arrowColor: PageStyle.c_000000,
-                        clearBtnColor: PageStyle.c_000000_opacity40p,
-                        code: logic.areaCode.value,
-                        onAreaCode: () => logic.openCountryCodePicker(),
-                        showClearBtn: logic.showAccountClearBtn.value,
-                        inputWay: InputWay.email,
-                      )),
-                ),
-                Positioned(
-                  top: 345.h,
-                  left: 40.w,
-                  width: 295.w,
-                  child: Obx(() => logic.isPasswordLogin
-                      ? PwdInputBox(
-                          controller: logic.pwdCtrl,
-                          labelStyle: PageStyle.ts_171A1D_14sp,
-                          hintStyle: PageStyle.ts_171A1D0_opacity40p_17sp,
-                          textStyle: PageStyle.ts_171A1D_17sp,
-                          showClearBtn: logic.showPwdClearBtn.value,
-                          obscureText: logic.obscureText.value,
-                          onClickEyesBtn: () => logic.toggleEye(),
-                          clearBtnColor: PageStyle.c_000000_opacity40p,
-                          eyesBtnColor: PageStyle.c_333333,
-                        )
-                      : CodeInputBox(
-                          controller: logic.codeCtrl,
-                          labelStyle: PageStyle.ts_171A1D_14sp,
-                          hintStyle: PageStyle.ts_171A1D0_opacity40p_17sp,
-                          textStyle: PageStyle.ts_171A1D_17sp,
-                          onClickCodeBtn: logic.getVerificationCode,
-                        )),
-                ),
-                Positioned(
-                  top: 419.h,
-                  left: 40.w,
-                  child: GestureDetector(
-                    onTap: logic.switchLoginType,
-                    behavior: HitTestBehavior.translucent,
-                    child: Obx(() => Text(
-                          logic.isPasswordLogin
-                              ? StrRes.useSMSLogin
-                              : StrRes.usePwdLogin,
-                          style: PageStyle.ts_0089FF_12sp,
-                        )),
-                  ),
-                ),
-                /*Positioned(
-                  top: 419.h,
-                  right: 40.w,
-                  child: GestureDetector(
-                    onTap: () => logic.register(),
-                    behavior: HitTestBehavior.translucent,
-                    child: Obx(() => Text(
-                          logic.index.value == 0
-                              ? StrRes.phoneRegister
-                              : StrRes.emailRegister,
-                          style: PageStyle.ts_0089FF_12sp,
-                        )),
-                  ),
-                ),*/
-                Positioned(
-                  top: 520.h,
-                  left: 40.w,
-                  width: 295.w,
-                  child: DebounceButton(
-                    onTap: () async => await logic.login(),
-                    // your tap handler moved here
-                    builder: (context, onTap) {
-                      return Obx(() => Button(
-                            enabled: logic.enabledLoginButton.value,
-                            text: StrRes.login,
-                            onTap: onTap,
-                          ));
-                    },
-                  ),
-                  // child: Obx(() => Button(
-                  //       textStyle: logic.enabledLoginButton.value
-                  //           ? PageStyle.ts_FFFFFF_18sp
-                  //           : PageStyle.ts_898989_18sp,
-                  //       text: StrRes.login,
-                  //       background: logic.enabledLoginButton.value
-                  //           ? PageStyle.c_1D6BED
-                  //           : PageStyle.c_D8D8D8,
-                  //       onTap: logic.enabledLoginButton.value
-                  //           ? () => logic.login()
-                  //           : null,
-                  //     )),
-                ),
-                // Positioned(
-                //   top: 583.h,
-                //   width: 375.w,
-                //   // left: 48.w,
-                //   // width: 295.w,
-                //   child: Obx(() => ProtocolView(
-                //         isChecked: logic.agreedProtocol.value,
-                //         radioStyle: RadioStyle.BLUE,
-                //         onTap: () => logic.toggleProtocol(),
-                //         margin: EdgeInsets.only(top: 19.h),
-                //         style1: PageStyle.ts_333333_12sp,
-                //         style2: PageStyle.ts_1D6BED_12sp,
-                //       )),
-                // )
-
-                Positioned(
-                  bottom: 60.h,
-                  width: 375.w,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      GestureDetector(
-                        onTap: () => logic.forgetPassword(),
-                        behavior: HitTestBehavior.translucent,
-                        child: Text(
-                          StrRes.forgetPwd,
-                          style: PageStyle.ts_0089FF_12sp,
-                        ),
-                      ),
-                      Container(
-                        width: 1.w,
-                        height: 15.h,
-                        color: PageStyle.c_A2A3A5,
-                        margin: EdgeInsets.symmetric(horizontal: 12.w),
-                      ),
-                      GestureDetector(
-                        onTap: () => logic.register(),
-                        behavior: HitTestBehavior.translucent,
-                        child: Obx(() => Text(
-                              logic.index.value == 0
-                                  ? StrRes.phoneRegister
-                                  : StrRes.emailRegister,
-                              style: PageStyle.ts_0089FF_12sp,
+                Center(
+                  child: Container(
+                      width: 0.8.sw,
+                      height: 0.4.sh,
+                      child: Column(children: [
+                        Obx(() => PhoneInputBox(
+                              controller: logic.emailCtrl,
+                              labelStyle: PageStyle.ts_171A1D_14sp,
+                              hintStyle: PageStyle.ts_171A1D0_opacity40p_17sp,
+                              textStyle: PageStyle.ts_171A1D_17sp,
+                              codeStyle: PageStyle.ts_171A1D_17sp,
+                              arrowColor: PageStyle.c_FFFFFF,
+                              clearBtnColor: PageStyle.c_FFFFFF,
+                              code: logic.areaCode.value,
+                              onAreaCode: () => logic.openCountryCodePicker(),
+                              showClearBtn: logic.showAccountClearBtn.value,
+                              inputWay: InputWay.email,
                             )),
-                      ),
-                    ],
-                  ),
-                )
+                        Obx(() => logic.isPasswordLogin
+                            ? PwdInputBox(
+                                controller: logic.pwdCtrl,
+                                labelStyle: PageStyle.ts_171A1D_14sp,
+                                hintStyle: PageStyle.ts_171A1D0_opacity40p_17sp,
+                                textStyle: PageStyle.ts_171A1D_17sp,
+                                showClearBtn: logic.showPwdClearBtn.value,
+                                obscureText: logic.obscureText.value,
+                                onClickEyesBtn: () => logic.toggleEye(),
+                                clearBtnColor: PageStyle.c_000000_opacity40p,
+                                eyesBtnColor: PageStyle.c_FFFFFF,
+                              )
+                            : CodeInputBox(
+                                controller: logic.codeCtrl,
+                                labelStyle: PageStyle.ts_171A1D_14sp,
+                                hintStyle: PageStyle.ts_171A1D0_opacity40p_17sp,
+                                textStyle: PageStyle.ts_171A1D_17sp,
+                                onClickCodeBtn: logic.getVerificationCode,
+                              )),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: GestureDetector(
+                            onTap: logic.switchLoginType,
+                            behavior: HitTestBehavior.translucent,
+                            child: Obx(() => Text(
+                                  logic.isPasswordLogin
+                                      ? StrRes.useSMSLogin
+                                      : StrRes.usePwdLogin,
+                                  style: PageStyle.ts_0089FF_12sp,
+                                )),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        DebounceButton(
+                          onTap: () async => await logic.login(),
+                          // your tap handler moved here
+                          builder: (context, onTap) {
+                            return Obx(() => Button(
+                                  enabled: logic.enabledLoginButton.value,
+                                  text: StrRes.login,
+                                  onTap: onTap,
+                                ));
+                          },
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            GestureDetector(
+                              onTap: () => logic.forgetPassword(),
+                              behavior: HitTestBehavior.translucent,
+                              child: Text(
+                                StrRes.forgetPwd,
+                                style: PageStyle.ts_0089FF_12sp,
+                              ),
+                            ),
+                            Container(
+                              width: 1.w,
+                              height: 15.h,
+                              color: Color.fromARGB(255, 251, 253, 255),
+                              margin: EdgeInsets.symmetric(horizontal: 12.w),
+                            ),
+                            GestureDetector(
+                              onTap: () => logic.register(),
+                              behavior: HitTestBehavior.translucent,
+                              child: Obx(() => Text(
+                                    logic.index.value == 0
+                                        ? StrRes.phoneRegister
+                                        : StrRes.emailRegister,
+                                    style: PageStyle.ts_0089FF_12sp,
+                                  )),
+                            ),
+                          ],
+                        ),
+                      ])),
+                ),
               ],
             ),
           ),

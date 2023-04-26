@@ -56,7 +56,7 @@ class ChatPage extends StatelessWidget {
         },
         onLongPressRightAvatar: () {},
         onTapLeftAvatar: () {
-          logic.onTapLeftAvatar(index);
+          // logic.onTapLeftAvatar(index);
         },
         onTapRightAvatar: () {},
         onClickAtText: (uid) {
@@ -106,8 +106,11 @@ class ChatPage extends StatelessWidget {
                   backgroundColor: PageStyle.c_FFFFFF,
                   appBar: EnterpriseTitleBar.chatTitle(
                     title: logic.name.value,
+                    memberCount: logic.isGroupChat
+                        ? logic.groupInfo!.value.memberCount
+                        : null,
                     subTitle: logic.getSubTile(),
-                    isLiving: true, //logic.isLiving.value,
+                    isLiving: false, //logic.isLiving.value,
                     goLiving: logic.goWatchLiving,
                     onClickCallBtn: () => logic.call(),
                     onClickMoreBtn: () => logic.chatSetup(),

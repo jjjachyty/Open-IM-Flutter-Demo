@@ -22,12 +22,12 @@ class MinePage extends StatelessWidget {
           Obx(
             () => Container(
               height: 222.h,
-              // decoration: BoxDecoration(
-              //   image: DecorationImage(
-              //     image: AssetImage(ImageRes.ic_mineHeadBg),
-              //     fit: BoxFit.fill,
-              //   ),
-              // ),
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(ImageRes.ic_mineHeadBg),
+                  fit: BoxFit.fill,
+                ),
+              ),
               child: Stack(
                 alignment: Alignment.center,
                 children: [

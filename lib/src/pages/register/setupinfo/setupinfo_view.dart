@@ -23,6 +23,7 @@ class SetupSelfInfoPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return TouchCloseSoftKeyboard(
       child: Scaffold(
+        backgroundColor: Color.fromARGB(255, 87, 154, 212),
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,

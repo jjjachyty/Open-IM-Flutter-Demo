@@ -26,9 +26,8 @@ class GroupSetupLogic extends GetxController {
   ConversationInfo? conversationInfo;
 
   getGroupMembers() async {
-    var list = await OpenIM.iMManager.groupManager.getGroupMemberListMap(
-      groupId: info.value.groupID,
-    );
+    var list = await OpenIM.iMManager.groupManager
+        .getGroupMemberListMap(groupId: info.value.groupID);
 
     if (list is List) {
       var l = list.map((e) => en.GroupMembersInfo.fromJson(e));

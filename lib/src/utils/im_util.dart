@@ -170,8 +170,8 @@ class IMUtil {
   }
 
   static void openVoice(Message msg) async {
-    await player.setUrl(msg.soundElem!.sourceUrl!);
-    await player.play();
+    // await player.setUrl(msg.soundElem!.soundPath!);
+    // await player.play();
   }
 
   static void openFile(

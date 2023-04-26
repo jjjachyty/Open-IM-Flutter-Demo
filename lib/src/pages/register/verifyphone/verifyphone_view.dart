@@ -19,7 +19,7 @@ class VerifyPhonePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return TouchCloseSoftKeyboard(
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Color.fromARGB(255, 87, 154, 212),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Container(

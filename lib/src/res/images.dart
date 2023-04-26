@@ -1,6 +1,7 @@
 class ImageRes {
   static const _dir = "assets/images/";
   static const ic_loginBg = "${_dir}ic_login_bg.webp";
+  static const ic_registerBg = "${_dir}ic_register_bg.webp";
   static const ic_areaCodeMoreArrow = "${_dir}ic_areacode_more.webp";
   static const ic_clearInput = "${_dir}ic_clear_input.webp";
   static const ic_eyeOpen = "${_dir}ic_eye_open.webp";

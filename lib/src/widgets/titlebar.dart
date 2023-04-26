@@ -227,6 +227,7 @@ class EnterpriseTitleBar extends StatelessWidget
     String? title,
     String? subTitle,
     bool? isLiving,
+    int? memberCount,
     double? height,
     String? leftButton,
     Function()? onClickCallBtn,
@@ -308,6 +309,7 @@ class EnterpriseTitleBar extends StatelessWidget
                     title,
                     style: PageStyle.ts_333333_18sp,
                   ),
+                if (memberCount != null) Text("($memberCount)")
               ],
             ),
             if (null != subTitle && subTitle.isNotEmpty)

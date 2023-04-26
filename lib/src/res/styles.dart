@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PageStyle {
@@ -109,7 +110,7 @@ class PageStyle {
   );
   static var ts_000000_14sp = TextStyle(
     fontSize: 14.sp,
-    color: Color(0xFF000000),
+    color: Color(0xFFFFFFFFFF),
   );
   static var ts_000000_16sp = TextStyle(
     fontSize: 16.sp,
@@ -267,7 +268,7 @@ class PageStyle {
   );
   static var ts_999999_18sp = TextStyle(
     fontSize: 18.sp,
-    color: Color(0xFF999999),
+    color: Color.fromARGB(255, 238, 238, 238),
   );
   static var ts_666666_12sp = TextStyle(
     fontSize: 12.sp,
@@ -406,7 +407,7 @@ class PageStyle {
   );
   static var ts_171A1D_14sp = TextStyle(
     fontSize: 14.sp,
-    color: Color(0xFF171A1D),
+    color: Color.fromARGB(255, 250, 251, 252),
   );
   static var ts_171A1D_12sp = TextStyle(
     fontSize: 12.sp,
@@ -414,7 +415,7 @@ class PageStyle {
   );
   static var ts_171A1D_17sp = TextStyle(
     fontSize: 17.sp,
-    color: Color(0xFF171A1D),
+    color: Color.fromARGB(255, 255, 255, 255),
   );
   static var ts_171A1D_18sp = TextStyle(
     fontSize: 18.sp,
@@ -427,11 +428,11 @@ class PageStyle {
   );
   static var ts_171A1D0_opacity40p_17sp = TextStyle(
     fontSize: 17.sp,
-    color: Color(0xFF171A1D).withOpacity(0.4),
+    color: Color.fromARGB(255, 247, 247, 248).withOpacity(0.4),
   );
   static var ts_0089FF_12sp = TextStyle(
     fontSize: 12.sp,
-    color: Color(0xFF0089FF),
+    color: Colors.white,
   );
   static var ts_0089FF_16sp = TextStyle(
     fontSize: 16.sp,

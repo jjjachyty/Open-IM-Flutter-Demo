@@ -23,7 +23,6 @@ class ConversationPage extends StatelessWidget {
     return Obx(
       () => TouchCloseSoftKeyboard(
         child: Scaffold(
-          backgroundColor: PageStyle.c_FFFFFF,
           // resizeToAvoidBottomInset: false,
           // appBar: AppBar(),
           appBar: EnterpriseTitleBar.conversationTitle(
@@ -71,7 +70,7 @@ class ConversationPage extends StatelessWidget {
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) => ConversationItemView(
-                isLiving: true,
+                isLiving: false,
                 onTap: () => logic.toChat(index),
                 avatarUrl: logic.getAvatar(index),
                 title: logic.getShowName(index),

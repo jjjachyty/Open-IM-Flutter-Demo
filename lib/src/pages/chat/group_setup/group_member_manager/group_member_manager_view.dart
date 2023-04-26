@@ -77,7 +77,7 @@ class GroupMemberManagerPage extends StatelessWidget {
                       Obx(() => buildAzListItemView(
                             name: data.nickname!,
                             url: data.faceURL,
-                            onTap: () => logic.viewUserInfo(index),
+                            // onTap: () => logic.viewUserInfo(index),
                             onlineStatus: logic.onlineStatus[data.userID],
                             tags: [
                               if (data.tagIndex == '↑')

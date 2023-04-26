@@ -21,6 +21,9 @@ class EnterpriseChatApp extends StatelessWidget {
         debugShowCheckedModeBanner: true,
         enableLog: true,
         builder: builder,
+        theme: ThemeData.light(),
+        themeMode: ThemeMode.light,
+        darkTheme: ThemeData.dark(),
         logWriterCallback: Logger.print,
         translations: TranslationService(),
         localizationsDelegates: [

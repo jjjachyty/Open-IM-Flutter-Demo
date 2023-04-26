@@ -14,6 +14,7 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:openim_demo/src/common/apis.dart';
 import 'package:openim_demo/src/core/controller/im_controller.dart';
 import 'package:openim_demo/src/models/contacts_info.dart';
+import 'package:openim_demo/src/pages/chat/group_setup/group_setup_logic.dart';
 import 'package:openim_demo/src/pages/conversation/conversation_logic.dart';
 import 'package:openim_demo/src/pages/select_contacts/select_contacts_logic.dart';
 import 'package:openim_demo/src/res/strings.dart';
@@ -71,6 +72,7 @@ class ChatLogic extends GetxController {
   String? gid;
   var name = ''.obs;
   var icon = ''.obs;
+  Rx<GroupInfo>? groupInfo;
   var isLiving = false.obs;
   var messageList = <Message>[].obs;
   var lastTime;
@@ -136,6 +138,10 @@ class ChatLogic extends GetxController {
     icon.value = arguments['icon'];
     // 获取在线状态
     _startQueryOnlineStatus();
+    //获取群用户数量
+    if (gid != null) {
+      getGroupInfo();
+    }
     // 新增消息监听
     imLogic.onRecvNewMessage = (Message message) {
       // 如果是当前窗口的消息
@@ -266,6 +272,24 @@ class ChatLogic extends GetxController {
       }
     });
     super.onInit();
+  }
+
+  getGroupInfo() async {
+    if (groupInfo == null) groupInfo = GroupInfo(groupID: gid!).obs;
+    var list = await OpenIM.iMManager.groupManager.getGroupsInfo(
+      gidList: [groupInfo!.value.groupID],
+    );
+    if (list.isEmpty) return;
+    var value = list.first;
+    groupInfo!.update((val) {
+      val?.groupName = value.groupName;
+      val?.faceURL = value.faceURL;
+      val?.notification = value.notification;
+      val?.introduction = value.introduction;
+      val?.memberCount = value.memberCount;
+      val?.ownerUserID = value.ownerUserID;
+      print('群组id:${value.ownerUserID}');
+    });
   }
 
   void chatSetup() {
@@ -815,10 +839,13 @@ class ChatLogic extends GetxController {
     } else if (msg.contentType == MessageType.video) {
       IMUtil.openVideo(msg);
     } else if (msg.contentType == MessageType.voice) {
+      msg.isRead = true;
+      messageList.refresh();
       IMUtil.openVoice(msg);
+      OpenIM.iMManager.messageManager.markGroupMessageAsRead(
+          groupID: gid!, messageIDList: [msg.clientMsgID!]);
     } else if (msg.contentType == MessageType.file) {
       IMUtil.openFile(msg);
-      // OpenFile.open(filePath);
     } else if (msg.contentType == MessageType.card) {
       print('-------content:${msg.content}');
       var info = ContactsInfo.fromJson(json.decode(msg.content!));

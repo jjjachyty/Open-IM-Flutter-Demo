@@ -6,13 +6,18 @@
   <component name="ChangeListManager">
     <list default="true" id="2700960f-de6b-4ef9-9763-3a500acb6c8f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/src/pages/chat/group_setup/group_setup_logic.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/src/pages/chat/group_setup/group_setup_logic.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/src/res/lang/en_US.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/src/res/lang/en_US.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/src/res/lang/zh_CN.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/src/res/lang/zh_CN.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[/Users/janly/.android/avd/Pixel_6_API_29.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[5GK4C19506007726]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -31,9 +36,15 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
+    "android.gradle.sync.needed": "true",
     "cidr.known.project.marker": "true",
-    "last_opened_file_path": "/Users/janly/data/flutter/workspace/Open-IM-Flutter-Demo/android",
-    "memory.settings.postsync.last.time.stamp": "1681033057608"
+    "com.google.services.firebase.aqiPopupShown": "true",
+    "last_opened_file_path": "W:/flutter/workspace/Open-IM-Flutter-Demo/android",
+    "memory.settings.postsync.last.time.stamp": "1681033057608",
+    "project.structure.last.edited": "SDK Location",
+    "project.structure.proportion": "0.17",
+    "project.structure.side.proportion": "0.0",
+    "show.do.not.copy.http.proxy.settings.to.gradle": "true"
   }
 }]]></component>
   <component name="RunManager">
@@ -106,5 +117,16 @@
       <updated>1681032531633</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
