@@ -95,7 +95,7 @@ class IMWidget {
               onData?.call(
                   (Config.isIP
                       ? "http://${Config.host}:10005" + name
-                      : "avator.${Config.host}" + name),
+                      : "storage.${Config.host}" + name),
                   "");
             },
           )
