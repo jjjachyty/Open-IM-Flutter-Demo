@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cupertino_datetime_picker/flutter_cupertino_datetime_picker.dart';
@@ -30,6 +32,48 @@ class SetupSelfInfoLogic extends GetxController {
   final nickName = ''.obs;
   final gender = 1.obs;
   final birth = 0.obs;
+  final familiyNames = [
+    "赵",
+    "钱",
+    "孙",
+    "李",
+    "周",
+    "吴",
+    "郑",
+    "王",
+    "冯",
+    "陈",
+    "褚",
+    "卫",
+    "蒋",
+    "沈",
+    "韩",
+    "杨",
+    "张",
+    "欧阳"
+  ];
+  final firstNames = [
+    "金",
+    "木",
+    "水",
+    "火",
+    "土",
+    "春",
+    "夏",
+    "秋",
+    "冬",
+    "山",
+    "石",
+    "田",
+    "天",
+    "地",
+    "玄",
+    "黄",
+    "宇",
+    "宙",
+    "洪",
+    "荒"
+  ];
 
   @override
   void onInit() {
@@ -85,8 +129,22 @@ class SetupSelfInfoLogic extends GetxController {
     AppNavigator.startMain();
   }
 
+  roundName() async {
+    var rng = new Random();
+    var namelength = (rng.nextInt(1) + 1);
+    var familiyNamesLen = familiyNames.length;
+    var firstNamesLen = firstNames.length;
+    var name = familiyNames[rng.nextInt(familiyNamesLen)];
+    for (var i = 0; i < 2; i++) {
+      name += firstNames[rng.nextInt(firstNamesLen)];
+    }
+    nameCtrl.text = name;
+  }
+
   syncSelfInfo(String uid) async {
-    if (icon.value.isNotEmpty == true) {
+    if (icon.value.contains("http")) {
+      await Apis.updateUserInfo(userID: uid, faceURL: icon.value);
+    } else if (icon.value.isNotEmpty == true) {
       final faceURL = await HttpUtil.uploadImageForMinio(path: icon.value);
       await Apis.updateUserInfo(userID: uid, faceURL: faceURL);
       // await OpenIM.iMManager.userManager.setSelfInfo(faceURL: faceURL);

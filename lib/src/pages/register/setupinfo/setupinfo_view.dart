@@ -144,9 +144,13 @@ class SetupSelfInfoPage extends StatelessWidget {
                   controller: logic.nameCtrl,
                   autofocus: true,
                   decoration: InputDecoration(
-                    labelText: StrRes.nickname,
-                    hintText: logic.nickName.value,
-                  ),
+                      labelText: StrRes.nickname,
+                      hintText: logic.nickName.value,
+                      suffix: TextButton(
+                          onPressed: () {
+                            logic.roundName();
+                          },
+                          child: Text("随机"))),
                 ),
               )
             ],
@@ -173,7 +177,13 @@ class SetupSelfInfoPage extends StatelessWidget {
 
   Widget _buildAvatarButton() {
     late Widget child;
-    if (logic.icon.value.isEmpty) {
+    if (logic.icon.value.contains("http")) {
+      child = Image.network(
+        logic.icon.value,
+        width: 35.h,
+        height: 35.h,
+      );
+    } else if (logic.icon.value.isEmpty) {
       if (logic.avatarIndex.value == -1) {
         child = Image.asset(
           ImageRes.ic_smallCamera,

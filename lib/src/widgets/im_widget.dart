@@ -1,5 +1,6 @@
 import 'dart:async';
-
+import 'dart:math';
+import 'package:openim_demo/src/common/config.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -17,7 +18,6 @@ import 'bottom_sheet_view.dart';
 
 class IMWidget {
   static final ImagePicker _picker = ImagePicker();
-
 
   static void openPhotoSheet({
     Function(String path, String? url)? onData,
@@ -87,6 +87,18 @@ class IMWidget {
                 });
               },
             ),
+          SheetItem(
+            label: "随机",
+            onTap: () {
+              var rd = Random();
+              var name = "/avator/" + rd.nextInt(100).toString() + ".png";
+              onData?.call(
+                  (Config.isIP
+                      ? "http://${Config.host}:10005" + name
+                      : "avator.${Config.host}" + name),
+                  "");
+            },
+          )
         ],
       ),
     );
@@ -159,7 +171,8 @@ class IMWidget {
     return completer.future;
   }
 
-  static void openNoDisturbSettingSheet({bool isGroup = false, Function(int index)? onTap}) {
+  static void openNoDisturbSettingSheet(
+      {bool isGroup = false, Function(int index)? onTap}) {
     Get.bottomSheet(
       BottomSheetView(
         items: [
