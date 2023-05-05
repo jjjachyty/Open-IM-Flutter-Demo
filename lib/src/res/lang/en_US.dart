@@ -39,6 +39,7 @@ const Map<String, String> en_US = {
   "album": "Album",
   "camera": "Camera",
   "videoCall": "Video Call",
+  "live": "Live",
   "picture": "Picture",
   "video": "Video",
   "voice": "Voice",

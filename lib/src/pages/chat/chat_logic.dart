@@ -879,6 +879,12 @@ class ChatLogic extends GetxController {
   /// 拨视频或音频
   void call() {}
 
+  ///开始直播
+  void live() {
+    if (null == gid || null == uid) return;
+    AppNavigator.startLiving(gid: gid!, uid: uid!);
+  }
+
   /// 群聊天长按头像为@用户
   void onLongPressLeftAvatar(int index) {
     var msg = indexOfMessage(index);

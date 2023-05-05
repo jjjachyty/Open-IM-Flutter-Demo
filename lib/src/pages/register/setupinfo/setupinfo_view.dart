@@ -150,7 +150,7 @@ class SetupSelfInfoPage extends StatelessWidget {
                           onPressed: () {
                             logic.roundName();
                           },
-                          child: Text("随机"))),
+                          child: Text(StrRes.round))),
                 ),
               )
             ],

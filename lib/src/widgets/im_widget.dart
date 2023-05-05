@@ -88,7 +88,7 @@ class IMWidget {
               },
             ),
           SheetItem(
-            label: "随机",
+            label: StrRes.round,
             onTap: () {
               var rd = Random();
               var name = "/avator/" + rd.nextInt(100).toString() + ".png";

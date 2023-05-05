@@ -56,7 +56,7 @@ class ChatPage extends StatelessWidget {
         },
         onLongPressRightAvatar: () {},
         onTapLeftAvatar: () {
-          // logic.onTapLeftAvatar(index);
+          logic.onTapLeftAvatar(index);
         },
         onTapRightAvatar: () {},
         onClickAtText: (uid) {
@@ -146,8 +146,14 @@ class ChatPage extends StatelessWidget {
                             onTapFile: () => logic.onTapFile(),
                             onTapLocation: () => logic.onTapLocation(),
                             onTapVideoCall: () => logic.call(),
+                            onTapLive: () => logic.live(),
                             onStopVoiceInput: () => logic.onStopVoiceInput(),
                             onStartVoiceInput: () => logic.onStartVoiceInput(),
+                            liveIcon: Image.asset(
+                              "assets/images/ic_tools_live.webp",
+                              width: 48.h,
+                              height: 48.h,
+                            ),
                           ),
                           multiOpToolbox: ChatMultiSelToolbox(
                             onDelete: () => logic.mergeDelete(),

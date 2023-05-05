@@ -2,6 +2,8 @@ import 'config.dart';
 
 class Urls {
   static var register2 = "${Config.imApiUrl()}/demo/user_register";
+  static var rtcToken = "${Config.imApiUrl()}/auth/rtc_token";
+
   static var login2 = "${Config.imApiUrl()}/demo/user_token";
   static var importFriends = "${Config.imApiUrl()}/friend/import_friend";
   static var inviteToGroup = "${Config.imApiUrl()}/group/invite_user_to_group";

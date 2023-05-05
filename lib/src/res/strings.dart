@@ -72,6 +72,8 @@ class StrRes {
 
   static get enterApp => 'enterApp'.tr;
 
+  static get round => 'round'.tr;
+
   static get home => 'home'.tr;
 
   static get contacts => 'contacts'.tr;

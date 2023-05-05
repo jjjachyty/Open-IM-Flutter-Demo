@@ -39,6 +39,7 @@ const Map<String, String> zh_CN = {
   "album": "相册",
   "camera": "拍摄",
   "videoCall": "视频通话",
+  "live": "直播",
   "picture": "图片",
   "video": "视频",
   "voice": "语音",

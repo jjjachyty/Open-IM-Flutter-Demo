@@ -13,31 +13,39 @@ class SplashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: Stack(
-        children: [
-          Positioned(
-            top: 603.h,
-            width: 375.w,
-            child: Center(
-              child: Image.asset(
-                ImageRes.ic_app,
-                width: 52.w,
-                height: 53.h,
-              ),
-            ),
-          ),
-          Positioned(
-            top: 673.h,
-            width: 375.w,
-            child: Center(
-              child: Text(
-                StrRes.welcomeHint,
-                style: PageStyle.ts_333333_16sp,
-              ),
-            ),
-          )
-        ],
+        child: Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/images/splash.gif'),
+          fit: BoxFit.fill, // 完全填充
+        ),
       ),
-    );
+    )
+        // Stack(
+        //   children: [
+        //     Positioned(
+        //       top: 603.h,
+        //       width: 375.w,
+        //       child: Center(
+        //         child: Image.asset(
+        //           ImageRes.ic_app,
+        //           width: 52.w,
+        //           height: 53.h,
+        //         ),
+        //       ),
+        //     ),
+        //     Positioned(
+        //       top: 673.h,
+        //       width: 375.w,
+        //       child: Center(
+        //         child: Text(
+        //           StrRes.welcomeHint,
+        //           style: PageStyle.ts_333333_16sp,
+        //         ),
+        //       ),
+        //     )
+        //   ],
+        // ),
+        );
   }
 }

@@ -189,6 +189,24 @@ class Apis {
     );
   }
 
+  static Future<dynamic> getRTCToken({
+    int uid = 0,
+    required int channelName,
+    int role = 2, //1 pub 2sub
+  }) async {
+    return HttpUtil.post(
+      Urls.rtcToken,
+      data: {
+        'uid': uid,
+        'channelName': channelName,
+        'role': role,
+        'platform': await IMUtil.getPlatform(),
+        'operationID': _getOperationID(),
+      },
+      options: chatTokenOptions,
+    );
+  }
+
   static Future<dynamic> queryMyFullInfo() async {
     final data = await Apis.getUsersFullInfo(
       userIDList: [OpenIM.iMManager.uid],

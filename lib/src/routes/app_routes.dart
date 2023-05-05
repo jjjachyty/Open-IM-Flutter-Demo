@@ -59,6 +59,7 @@ abstract class AppRoutes {
   static const ORGANIZATION = "/organization";
   static const FORGET_PASSWORD = "/forget_password";
   static const WATCH_LIVING = "/watch_live";
+  static const START_LIVING = "/start_live";
 }
 
 extension RoutesExtension on String {

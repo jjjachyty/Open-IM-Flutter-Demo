@@ -266,6 +266,13 @@ class AppNavigator {
     });
   }
 
+  static void startLiving({required String gid, required String uid}) {
+    Get.toNamed(AppRoutes.START_LIVING, arguments: {
+      'gid': gid,
+      'uid': uid,
+    });
+  }
+
   static void startSetUserName() {
     Get.toNamed(AppRoutes.SETUP_USER_NAME);
   }
