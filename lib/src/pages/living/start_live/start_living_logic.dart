@@ -44,6 +44,7 @@ class StartLivingLogic extends GetxController {
   Future<void> onClose() async {
     await engine.leaveChannel();
     await engine.release();
+    super.onClose();
   }
 
   _initEngine() async {

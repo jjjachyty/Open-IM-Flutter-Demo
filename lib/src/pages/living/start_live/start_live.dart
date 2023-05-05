@@ -21,22 +21,23 @@ class StartLiving extends StatelessWidget {
     return Scaffold(
         body: Stack(
       children: [
-        Expanded(
-          flex: 1,
-          child: AspectRatio(
-            aspectRatio: 1,
-            child: AgoraVideoView(
-                controller: VideoViewController(
-              rtcEngine: logic.engine,
-              canvas: const VideoCanvas(
-                uid: 0,
-              ),
-            )),
+        AgoraVideoView(
+            controller: VideoViewController(
+          rtcEngine: logic.engine,
+          canvas: const VideoCanvas(
+            uid: 0,
           ),
-        ),
+        )),
         AppBar(
           backgroundColor: Colors.transparent,
         ),
+        // Positioned(
+        //     bottom: 0,
+        //     child: Row(
+        //       children: [
+        //         IconButton(onPressed: null, icon: Icon(Icons.screen_rotation))
+        //       ],
+        //     ))
       ],
     )
         // ExampleActionsWidget(

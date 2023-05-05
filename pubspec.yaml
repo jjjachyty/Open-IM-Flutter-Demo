@@ -89,10 +89,10 @@ dependencies:
     # git:
     #   url: https://github.com/jjjachyty/flutter_openim_widget.git
     #   ref: master
-  agora_rtc_engine: 6.1.0
-    # git:
-    #   url: https://github.com/AgoraIO-Extensions/Agora-Flutter-SDK.git
-    #   ref: main
+  agora_rtc_engine:
+    git:
+      url: https://github.com/AgoraIO-Extensions/Agora-Flutter-SDK.git
+      ref: main
   just_audio: ^0.9.32
   agora_rtm: ^1.5.0
 

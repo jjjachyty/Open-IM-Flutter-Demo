@@ -56,7 +56,7 @@ class ChatPage extends StatelessWidget {
         },
         onLongPressRightAvatar: () {},
         onTapLeftAvatar: () {
-          logic.onTapLeftAvatar(index);
+          // logic.onTapLeftAvatar(index);
         },
         onTapRightAvatar: () {},
         onClickAtText: (uid) {
