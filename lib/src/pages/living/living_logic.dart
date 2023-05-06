@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_openim_widget/flutter_openim_widget.dart';
 import 'package:get/get.dart';
+import 'package:openim_demo/src/common/apis.dart';
 import 'package:openim_demo/src/pages/chat/chat_logic.dart';
 import 'package:openim_demo/src/pages/conversation/conversation_logic.dart';
 import 'package:openim_demo/src/utils/data_persistence.dart';
@@ -20,7 +21,7 @@ class LivingLogic extends GetxController {
   AgoraRtmClient? _client;
   AgoraRtmChannel? _channel;
 
-  late final RtcEngine engine;
+  late final RtcEngineEx engine;
   var isJoined = false.obs, switchCamera = true.obs, switchRender = true.obs;
   var remoteUid = 0.obs;
   late TextEditingController _controller;
@@ -54,7 +55,7 @@ class LivingLogic extends GetxController {
   }
 
   Future<void> _initEngine() async {
-    engine = createAgoraRtcEngine();
+    engine = createAgoraRtcEngineEx();
     await engine.initialize(RtcEngineContext(
       appId: config.appId,
       channelProfile: _channelProfileType,
@@ -96,29 +97,21 @@ class LivingLogic extends GetxController {
     // await engine.startPreview();
 
     // 加入频道，设置用户角色为主播
-    await engine.joinChannel(
-      token:
-          "007eJxTYOBr510jtYNNYkP/RXXuPucDc70O3zhrZah+p0eKPzxjaaECQ5KpQVqyWUqSRaK5mUlyapqFoWFqqoGJQXKymXmSkaH51Cc2KQ2BjAwXe+ezMDJAIIjPxWBobmZsYW5pam7AwAAAYqAelQ==",
-      channelId: "1763879570",
-      options: ChannelMediaOptions(
-        channelProfile: _channelProfileType,
-        clientRoleType: ClientRoleType.clientRoleAudience,
-      ),
-      uid: 10,
-    );
-    // await joinChannel();
+
+    await joinChannel();
   }
 
   Future<void> joinChannel() async {
+    //获取rtc token
+    var rtcToken =
+        await Apis.getRTCToken(channelName: gid!, uid: uid!, role: 2);
     await engine.joinChannel(
-      token: config.token,
-      channelId: gid!,
-      uid: int.parse(uid!),
-      options: ChannelMediaOptions(
-        channelProfile: _channelProfileType,
-        clientRoleType: ClientRoleType.clientRoleAudience,
-      ),
-    );
+        token: rtcToken['token'],
+        channelId: gid!,
+        uid: int.parse(uid!),
+        options: const ChannelMediaOptions(
+          clientRoleType: ClientRoleType.clientRoleAudience,
+        ));
   }
 
   Future<void> leaveChannel() async {

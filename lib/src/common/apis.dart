@@ -190,8 +190,8 @@ class Apis {
   }
 
   static Future<dynamic> getRTCToken({
-    int uid = 0,
-    required int channelName,
+    String uid = "0",
+    required String channelName,
     int role = 2, //1 pub 2sub
   }) async {
     return HttpUtil.post(
@@ -200,6 +200,20 @@ class Apis {
         'uid': uid,
         'channelName': channelName,
         'role': role,
+        'platform': await IMUtil.getPlatform(),
+        'operationID': _getOperationID(),
+      },
+      options: chatTokenOptions,
+    );
+  }
+
+  static Future<dynamic> getUserLive({
+    String uid = "0",
+  }) async {
+    return HttpUtil.post(
+      Urls.userLive,
+      data: {
+        'userID': uid,
         'platform': await IMUtil.getPlatform(),
         'operationID': _getOperationID(),
       },

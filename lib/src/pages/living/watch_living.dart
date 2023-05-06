@@ -1,6 +1,3 @@
-import 'dart:ffi';
-import 'dart:math';
-
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -61,10 +58,11 @@ class WatchLivingPage extends StatelessWidget {
   // Display remote user's video
   Widget _remoteVideo() {
     return AgoraVideoView(
-      controller: VideoViewController.remote(
+      controller: VideoViewController(
         rtcEngine: logic.engine,
-        canvas: VideoCanvas(uid: logic.remoteUid.value),
-        connection: const RtcConnection(channelId: "1763879570"),
+        canvas: VideoCanvas(
+          uid: logic.remoteUid.value,
+        ),
       ),
     );
   }

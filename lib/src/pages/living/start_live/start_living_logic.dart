@@ -1,11 +1,14 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:io';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:agora_rtm/agora_rtm.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_openim_widget/flutter_openim_widget.dart';
 import 'package:get/get.dart';
+import 'package:openim_demo/src/common/apis.dart';
 import 'package:openim_demo/src/pages/chat/chat_logic.dart';
 import 'package:openim_demo/src/pages/conversation/conversation_logic.dart';
 import 'package:openim_demo/src/utils/data_persistence.dart';
@@ -19,24 +22,27 @@ class StartLivingLogic extends GetxController {
   String? gid;
   late final RtcEngineEx engine;
   bool isReadyPreview = false;
-  bool isJoined = false;
-  late TextEditingController controller;
-  late final TextEditingController localUidController;
-  late final TextEditingController screenShareUidController;
+  dynamic rtcToken = "";
+  var isJoined = false.obs;
+  var leftDuration = 0.obs;
 
-  bool isScreenShared = false;
-
+  var isScreenShared = false.obs;
+  // var sourceType = VideoSourceType.videoSourceCamera.obs;
+  final MethodChannel _iosScreenShareChannel =
+      const MethodChannel('example_screensharing_ios');
   @override
   void onReady() {
     super.onReady();
   }
 
   @override
-  void onInit() {
-    controller = TextEditingController(text: uid);
-    localUidController = TextEditingController(text: uid);
-    screenShareUidController = TextEditingController(text: uid);
+  Future<void> onInit() async {
+    var arguments = Get.arguments;
+    uid = DataPersistence.getLoginCertificate()!.userID;
+    gid = arguments['gid'];
+
     _initEngine();
+    getUserLive();
     super.onInit();
   }
 
@@ -45,6 +51,13 @@ class StartLivingLogic extends GetxController {
     await engine.leaveChannel();
     await engine.release();
     super.onClose();
+  }
+
+  Future<void> getUserLive() async {
+    var userLive = await Apis.getUserLive(uid: uid!);
+    if (userLive != null) {
+      leftDuration.value = userLive["leftDuration"];
+    }
   }
 
   _initEngine() async {
@@ -62,12 +75,12 @@ class StartLivingLogic extends GetxController {
       logSink.log(
           '[onJoinChannelSuccess] connection: ${connection.toJson()} elapsed: $elapsed');
 
-      isJoined = true;
+      isJoined.value = true;
     }, onLeaveChannel: (RtcConnection connection, RtcStats stats) {
       logSink.log(
           '[onLeaveChannel] connection: ${connection.toJson()} stats: ${stats.toJson()}');
 
-      isJoined = false;
+      isJoined.value = false;
     }, onLocalVideoStateChanged: (VideoSourceType source,
             LocalVideoStreamState state, LocalVideoStreamError error) {
       logSink.log(
@@ -80,12 +93,12 @@ class StartLivingLogic extends GetxController {
       switch (state) {
         case LocalVideoStreamState.localVideoStreamStateCapturing:
         case LocalVideoStreamState.localVideoStreamStateEncoding:
-          isScreenShared = true;
+          isScreenShared.value = true;
 
           break;
         case LocalVideoStreamState.localVideoStreamStateStopped:
         case LocalVideoStreamState.localVideoStreamStateFailed:
-          isScreenShared = false;
+          isScreenShared.value = false;
 
           break;
         default:
@@ -112,7 +125,7 @@ class StartLivingLogic extends GetxController {
   }
 
   Future<void> updateScreenShareChannelMediaOptions() async {
-    final shareShareUid = int.tryParse(screenShareUidController.text);
+    final shareShareUid = int.tryParse(uid!);
     if (shareShareUid == null) return;
     await engine.updateChannelMediaOptionsEx(
       options: const ChannelMediaOptions(
@@ -124,44 +137,86 @@ class StartLivingLogic extends GetxController {
         publishScreenCaptureVideo: true,
         clientRoleType: ClientRoleType.clientRoleBroadcaster,
       ),
-      connection:
-          RtcConnection(channelId: controller.text, localUid: shareShareUid),
+      connection: RtcConnection(channelId: gid, localUid: shareShareUid),
     );
   }
 
-  void joinChannel() async {
-    final localUid = int.tryParse(localUidController.text);
-    if (localUid != null) {
-      await engine.joinChannelEx(
-          token:
-              '007eJxTYIgW/jg1nF30AM+ZJ+nXVj/4VmBjmVXow/udP6Su/YbgOyEFhiRTg7Rks5Qki0RzM5Pk1DQLQ8PUVAMTg+RkM/MkI0NzSU7TlIZARgZTH01mRgYIBPHZGXJTU0sy89IZGABW1h5e',
-          connection:
-              RtcConnection(channelId: controller.text, localUid: localUid),
-          options: const ChannelMediaOptions(
-            publishCameraTrack: true,
-            publishMicrophoneTrack: true,
-            clientRoleType: ClientRoleType.clientRoleBroadcaster,
-          ));
+  Future<void> joinChannel() async {
+    //获取rtc token
+    if (rtcToken == "") {
+      rtcToken = await Apis.getRTCToken(channelName: gid!, uid: uid!, role: 1);
+    }
+    await engine.joinChannelEx(
+        token: rtcToken["token"],
+        connection: RtcConnection(channelId: gid, localUid: int.tryParse(uid!)),
+        options: const ChannelMediaOptions(
+          publishCameraTrack: true,
+          publishMicrophoneTrack: true,
+          clientRoleType: ClientRoleType.clientRoleBroadcaster,
+        ));
+    // final shareShareUid = int.tryParse(screenShareUidController.text);
+    // if (shareShareUid != null) {
+    //   await engine.joinChannelEx(
+    //       token: rtcToken['token'],
+    //       connection: RtcConnection(
+    //           channelId: controller.text, localUid: shareShareUid),
+    //       options: const ChannelMediaOptions(
+    //         autoSubscribeVideo: true,
+    //         autoSubscribeAudio: true,
+    //         publishScreenTrack: true,
+    //         publishSecondaryScreenTrack: true,
+    //         publishCameraTrack: false,
+    //         publishMicrophoneTrack: false,
+    //         publishScreenCaptureAudio: true,
+    //         publishScreenCaptureVideo: true,
+    //         clientRoleType: ClientRoleType.clientRoleBroadcaster,
+    //       ));
+    // }
+  }
+
+  void startScreenShare() async {
+    if (isScreenShared.value) return;
+    //关闭摄像头 改成屏幕共享
+    await engine.leaveChannelEx(
+        connection:
+            RtcConnection(channelId: gid, localUid: int.tryParse(uid!)));
+    var rtcToken =
+        await Apis.getRTCToken(channelName: gid!, uid: uid!, role: 1);
+    // sourceType.value = VideoSourceType.videoSourceScreen;
+    await engine.joinChannelEx(
+        token: rtcToken['token'],
+        connection: RtcConnection(channelId: gid, localUid: int.parse(uid!)),
+        options: const ChannelMediaOptions(
+          autoSubscribeVideo: true,
+          autoSubscribeAudio: true,
+          publishScreenTrack: true,
+          publishSecondaryScreenTrack: true,
+          publishCameraTrack: false,
+          publishMicrophoneTrack: false,
+          publishScreenCaptureAudio: true,
+          publishScreenCaptureVideo: true,
+          clientRoleType: ClientRoleType.clientRoleBroadcaster,
+        ));
+    await engine.startScreenCapture(
+        const ScreenCaptureParameters2(captureAudio: true, captureVideo: true));
+    _showRPSystemBroadcastPickerViewIfNeed();
+  }
+
+  void stopScreenShare() async {
+    if (!isScreenShared.value) return;
+    await engine.leaveChannelEx(
+        connection:
+            RtcConnection(channelId: gid, localUid: int.tryParse(uid!)));
+    await engine.stopScreenCapture();
+    await joinChannel();
+  }
+
+  Future<void> _showRPSystemBroadcastPickerViewIfNeed() async {
+    if (!Platform.isIOS) {
+      return;
     }
 
-    final shareShareUid = int.tryParse(screenShareUidController.text);
-    if (shareShareUid != null) {
-      await engine.joinChannelEx(
-          token:
-              '007eJxTYIgW/jg1nF30AM+ZJ+nXVj/4VmBjmVXow/udP6Su/YbgOyEFhiRTg7Rks5Qki0RzM5Pk1DQLQ8PUVAMTg+RkM/MkI0NzSU7TlIZARgZTH01mRgYIBPHZGXJTU0sy89IZGABW1h5e',
-          connection: RtcConnection(
-              channelId: controller.text, localUid: shareShareUid),
-          options: const ChannelMediaOptions(
-            autoSubscribeVideo: true,
-            autoSubscribeAudio: true,
-            publishScreenTrack: true,
-            publishSecondaryScreenTrack: true,
-            publishCameraTrack: false,
-            publishMicrophoneTrack: false,
-            publishScreenCaptureAudio: true,
-            publishScreenCaptureVideo: true,
-            clientRoleType: ClientRoleType.clientRoleBroadcaster,
-          ));
-    }
+    await _iosScreenShareChannel
+        .invokeMethod('showRPSystemBroadcastPickerView');
   }
 }

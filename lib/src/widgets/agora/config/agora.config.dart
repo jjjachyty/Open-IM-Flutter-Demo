@@ -5,13 +5,6 @@ String get appId {
       defaultValue: 'b50fc6db8a764cef811ee040cc67b217');
 }
 
-/// Please refer to https://docs.agora.io/en/Agora%20Platform/token
-String get token {
-  // Allow pass a `token` as an environment variable with name `TEST_TOKEN` by using --dart-define
-  return const String.fromEnvironment('TEST_TOKEN',
-      defaultValue:
-          '007eJxTYOBr510jtYNNYkP/RXXuPucDc70O3zhrZah+p0eKPzxjaaECQ5KpQVqyWUqSRaK5mUlyapqFoWFqqoGJQXKymXmSkaH51Cc2KQ2BjAwXe+ezMDJAIIjPxWBobmZsYW5pam7AwAAAYqAelQ==');
-}
 
 /// Your channel ID
 // String get channelId {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_openim_widget/flutter_openim_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:openim_demo/src/pages/living/start_live/screen_sharing.dart';
 import 'package:openim_demo/src/res/images.dart';
 import 'package:openim_demo/src/res/strings.dart';
 import 'package:openim_demo/src/res/styles.dart';
@@ -110,7 +111,7 @@ class ChatPage extends StatelessWidget {
                         ? logic.groupInfo!.value.memberCount
                         : null,
                     subTitle: logic.getSubTile(),
-                    isLiving: false, //logic.isLiving.value,
+                    isLiving: true, //logic.isLiving.value,
                     goLiving: logic.goWatchLiving,
                     onClickCallBtn: () => logic.call(),
                     onClickMoreBtn: () => logic.chatSetup(),
