@@ -92,11 +92,10 @@ class IMWidget {
             onTap: () {
               var rd = Random();
               var name = "/avator/" + rd.nextInt(100).toString() + ".png";
-              onData?.call(
-                  (Config.isIP
-                      ? "http://${Config.host}:10005" + name
-                      : "storage.${Config.host}" + name),
-                  "");
+              var fullName = Config.isIP
+                  ? "http://${Config.host}:10005" + name
+                  : "https://storage.${Config.host}" + name;
+              onData?.call(fullName, fullName);
             },
           )
         ],

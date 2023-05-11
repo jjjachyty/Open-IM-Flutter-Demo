@@ -244,6 +244,8 @@ class StrRes {
 
   static get newsNotify => 'newsNotify'.tr;
 
+  static get shareRegister => 'shareRegister'.tr;
+
   static get accountSetup => 'accountSetup'.tr;
 
   static get aboutUs => 'aboutUs'.tr;
@@ -255,6 +257,8 @@ class StrRes {
   static get qrcode => 'qrcode'.tr;
 
   static get qrcodeTips => 'qrcodeTips'.tr;
+
+  static get myInvitation => 'invitation'.tr;
 
   static get remark => 'remark'.tr;
 

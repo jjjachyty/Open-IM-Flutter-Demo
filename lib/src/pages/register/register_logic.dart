@@ -84,5 +84,5 @@ class RegisterLogic extends GetxController {
   }
 
   bool get needInvitationCodeRegister =>
-      false /*appLogic.clientConfigMap['needInvitationCodeRegister'] != 0*/;
+      appLogic.clientConfigMap['need_invitation_code'] != 0;
 }

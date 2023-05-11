@@ -16,11 +16,17 @@ class StartLiving extends StatelessWidget {
     return Scaffold(
         body: Stack(
       children: [
-        AgoraVideoView(
-            controller: VideoViewController(
-          rtcEngine: logic.engine,
-          canvas: VideoCanvas(uid: 0),
-        )),
+        logic.isJoined.value
+            ? AgoraVideoView(
+                controller: VideoViewController(
+                rtcEngine: logic.engine,
+                canvas: VideoCanvas(uid: 0),
+              ))
+            : Container(
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage("assets/images/live_bg.png"))),
+              ),
         AppBar(
           backgroundColor: Colors.transparent,
         ),
@@ -38,38 +44,39 @@ class StartLiving extends StatelessWidget {
   Widget getToolBar() {
     if (logic.isJoined.value) {
       return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (!logic.isScreenShared.value)
-            MaterialButton(
-              onPressed: () async {
-                await logic.engine.switchCamera();
-              },
-              textColor: Colors.white,
-              child: Text("旋转屏幕"),
-            ),
+          // if (!logic.isScreenShared.value)
+          //   MaterialButton(
+          //     onPressed: () async {
+          //       await logic.engine.switchCamera();
+          //     },
+          //     textColor: Colors.white,
+          //     child: Text("旋转屏幕"),
+          //   ),
           MaterialButton(
             onPressed: () {
               logic.leaveChannel();
             },
+            color: Colors.red,
             textColor: Colors.white,
-            child: Text("结束直播"),
+            child: Text("结束讲课"),
           ),
-          logic.isScreenShared.value
-              ? MaterialButton(
-                  onPressed: () async {
-                    logic.stopScreenShare();
-                  },
-                  textColor: Colors.white,
-                  child: Text("关闭屏幕共享"),
-                )
-              : MaterialButton(
-                  onPressed: () async {
-                    logic.startScreenShare();
-                  },
-                  textColor: Colors.white,
-                  child: Text("分享屏幕"),
-                ),
+          // logic.isScreenShared.value
+          //     ? MaterialButton(
+          //         onPressed: () async {
+          //           logic.stopScreenShare();
+          //         },
+          //         textColor: Colors.white,
+          //         child: Text("关闭屏幕共享"),
+          //       )
+          //     : MaterialButton(
+          //         onPressed: () async {
+          //           logic.startScreenShare();
+          //         },
+          //         textColor: Colors.white,
+          //         child: Text("分享屏幕"),
+          //       ),
         ],
       );
     }
@@ -79,11 +86,11 @@ class StartLiving extends StatelessWidget {
         children: [
           MaterialButton(
             onPressed: () {
-              logic.joinChannel();
-              // logic.startScreenShare();
+              // logic.joinChannel();
+              logic.startScreenShare();
             },
             textColor: Colors.white,
-            child: Text("开始直播"),
+            child: Text("开始讲课"),
           ),
           Text(
             "当前剩余分钟数${logic.leftDuration}",

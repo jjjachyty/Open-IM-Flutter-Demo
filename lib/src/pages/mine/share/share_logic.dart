@@ -5,7 +5,7 @@ import 'package:openim_demo/src/core/controller/im_controller.dart';
 import 'package:openim_demo/src/widgets/qr_view.dart';
 import 'package:sprintf/sprintf.dart';
 
-class MyQrcodeLogic extends GetxController {
+class ShareAppLogic extends GetxController {
   // late Rx<UserInfo> userInfo;
   final imLogic = Get.find<IMController>();
 
@@ -27,7 +27,7 @@ class MyQrcodeLogic extends GetxController {
   }
 
   String buildQRContent() {
-    return '${IMQrcodeUrl.addFriend}${imLogic.userInfo.value.userID}';
+    return 'https://www.push131.com';
   }
 
   String getInvitationCode() {

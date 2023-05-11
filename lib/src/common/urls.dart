@@ -7,6 +7,7 @@ class Urls {
   static var login2 = "${Config.imApiUrl()}/demo/user_token";
   static var userLive = "${Config.imApiUrl()}/user/user_live";
 
+  static var userSelfInfo = "${Config.imApiUrl()}/user/get_self_user_info";
   static var importFriends = "${Config.imApiUrl()}/friend/import_friend";
   static var inviteToGroup = "${Config.imApiUrl()}/group/invite_user_to_group";
   static var onlineStatus =
@@ -30,4 +31,6 @@ class Urls {
   static var upgrade = "${Config.appAuthUrl()}/app/check";
 
   static final getClientConfig = '${Config.imApiUrl()}/init/get_client_config';
+  //直播
+  static var startLive = "${Config.imApiUrl()}/live/start";
 }

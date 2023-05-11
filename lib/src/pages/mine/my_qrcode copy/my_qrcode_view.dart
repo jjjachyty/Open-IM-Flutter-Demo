@@ -9,7 +9,7 @@ import 'package:openim_demo/src/widgets/im_widget.dart';
 import 'package:openim_demo/src/widgets/titlebar.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-import 'my_qrcode_logic.dart';
+import '../my_qrcode/my_qrcode_logic.dart';
 
 class MyQrcodePage extends StatelessWidget {
   final logic = Get.find<MyQrcodeLogic>();

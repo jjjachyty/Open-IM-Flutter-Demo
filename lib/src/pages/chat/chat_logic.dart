@@ -167,10 +167,11 @@ class ChatLogic extends GetxController {
           }
         } else {
           //直播逻辑处理更新群头像
-          if (message.contentType == MessageType.startLiving) {
+          if (message.contentType == MessageType.StartLivingNotification) {
             //直播消息
             isLiving.value = true;
-          } else if (message.contentType == MessageType.closeLiving) {
+          } else if (message.contentType ==
+              MessageType.CloseLivingNotification) {
             isLiving.value = false;
           }
 

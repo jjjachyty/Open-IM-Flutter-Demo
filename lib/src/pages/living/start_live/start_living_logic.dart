@@ -54,9 +54,9 @@ class StartLivingLogic extends GetxController {
   }
 
   Future<void> getUserLive() async {
-    var userLive = await Apis.getUserLive(uid: uid!);
-    if (userLive != null) {
-      leftDuration.value = userLive["leftDuration"];
+    var userInfo = await Apis.getUserSelfInfo(uid!);
+    if (userInfo != null && userInfo["leftDuration"] != "") {
+      leftDuration.value = int.parse(userInfo["leftDuration"]);
     }
   }
 
@@ -106,16 +106,23 @@ class StartLivingLogic extends GetxController {
       }
     }));
 
-    await engine.enableVideo();
-    await engine.setVideoEncoderConfiguration(
-      const VideoEncoderConfiguration(
-        dimensions: VideoDimensions(width: 1920, height: 1080),
-        frameRate: 15,
-        bitrate: 0,
-      ),
-    );
-    await engine.startPreview();
+    // await engine.enableVideo();
+    await engine.enableAudio();
     await engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
+    await engine.setAudioProfile(
+      profile: AudioProfileType.audioProfileDefault,
+      scenario: AudioScenarioType.audioScenarioMeeting,
+    );
+
+    // await engine.setVideoEncoderConfiguration(
+    //   const VideoEncoderConfiguration(
+    //     dimensions: VideoDimensions(width: 1920, height: 1080),
+    //     frameRate: 15,
+    //     bitrate: 0,
+    //   ),
+    // );
+    // await engine.startPreview(sourceType: VideoSourceType.videoSourceScreen);
+    // await engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
     isReadyPreview = true;
   }
 
@@ -177,14 +184,30 @@ class StartLivingLogic extends GetxController {
   void startScreenShare() async {
     if (isScreenShared.value) return;
     //关闭摄像头 改成屏幕共享
-    await engine.leaveChannelEx(
-        connection:
-            RtcConnection(channelId: gid, localUid: int.tryParse(uid!)));
-    var rtcToken =
-        await Apis.getRTCToken(channelName: gid!, uid: uid!, role: 1);
+    // await engine.leaveChannelEx(
+    //     connection:
+    //         RtcConnection(channelId: gid, localUid: int.tryParse(uid!)));
+    // if (Platform.isAndroid) {
+    //   await Permission.microphone.request();
+    // }
+    // var rtcToken =
+    //     await Apis.getRTCToken(channelName: gid!, uid: uid!, role: 1);
+    var rtcToken = await Apis.startLive(int.parse(uid!), int.parse(gid!));
+
+    // await engine.joinChannelEx(
+    //     token: rtcToken['token'],
+    //     // channelId: gid!,
+    //     // uid: int.parse(uid! + "1"),
+    //     connection:
+    //         RtcConnection(channelId: gid, localUid: int.parse(uid! + "1")),
+    //     options: ChannelMediaOptions(
+    //       channelProfile: ChannelProfileType.channelProfileLiveBroadcasting,
+    //       clientRoleType: ClientRoleType.clientRoleBroadcaster,
+    //     ));
+
     // sourceType.value = VideoSourceType.videoSourceScreen;
     await engine.joinChannelEx(
-        token: rtcToken['token'],
+        token: rtcToken[0]['RtcToken'],
         connection: RtcConnection(channelId: gid, localUid: int.parse(uid!)),
         options: const ChannelMediaOptions(
           autoSubscribeVideo: true,
@@ -192,7 +215,7 @@ class StartLivingLogic extends GetxController {
           publishScreenTrack: true,
           publishSecondaryScreenTrack: true,
           publishCameraTrack: false,
-          publishMicrophoneTrack: false,
+          publishMicrophoneTrack: true,
           publishScreenCaptureAudio: true,
           publishScreenCaptureVideo: true,
           clientRoleType: ClientRoleType.clientRoleBroadcaster,

@@ -5,6 +5,7 @@ import 'package:openim_demo/src/core/controller/im_controller.dart';
 import 'package:openim_demo/src/res/images.dart';
 import 'package:openim_demo/src/res/strings.dart';
 import 'package:openim_demo/src/res/styles.dart';
+import 'package:openim_demo/src/utils/icon_font.dart';
 import 'package:openim_demo/src/widgets/avatar_view.dart';
 
 import 'mine_logic.dart';
@@ -94,26 +95,27 @@ class MinePage extends StatelessWidget {
             height: 3.h,
           ),
           _buildItemView(
-            icon: ImageRes.ic_myInfo,
+            icon: IconFontIcons.iconWodexinxi_jibenxinxi,
             label: StrRes.myInfo,
             onTap: () => logic.viewMyInfo(),
           ),
-          // _buildItemView(
-          //   icon: ImageRes.ic_newsNotify,
-          //   label: StrRes.newsNotify,
-          // ),
           _buildItemView(
-            icon: ImageRes.ic_accountSetup,
+            icon: IconFontIcons.iconFenxiangzhuce,
+            label: StrRes.shareRegister,
+            onTap: () => logic.shareApp(),
+          ),
+          _buildItemView(
+            icon: IconFontIcons.iconZhanghaoshezhi,
             label: StrRes.accountSetup,
             onTap: () => logic.accountSetup(),
           ),
           _buildItemView(
-            icon: ImageRes.ic_aboutUs,
+            icon: IconFontIcons.iconGuanyuwomen,
             label: StrRes.aboutUs,
             onTap: () => logic.aboutUs(),
           ),
           _buildItemView(
-            icon: ImageRes.ic_logout,
+            icon: IconFontIcons.iconTuichudenglu,
             label: StrRes.logout,
             onTap: () => logic.logout(),
           ),
@@ -123,7 +125,7 @@ class MinePage extends StatelessWidget {
   }
 
   Widget _buildItemView({
-    required String icon,
+    required IconData icon,
     required String label,
     Function()? onTap,
   }) =>
@@ -135,7 +137,7 @@ class MinePage extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset(icon, width: 22.w, height: 22.h),
+              Icon(icon),
               SizedBox(width: 13.w),
               Text(
                 label,

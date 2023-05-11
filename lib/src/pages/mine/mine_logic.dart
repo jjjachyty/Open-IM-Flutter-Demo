@@ -40,6 +40,11 @@ class MineLogic extends GetxController {
     // Get.toNamed(AppRoutes.ACCOUNT_SETUP);
   }
 
+  void shareApp() {
+    AppNavigator.startShareApp();
+    // Get.toNamed(AppRoutes.ACCOUNT_SETUP);
+  }
+
   void aboutUs() {
     AppNavigator.startAboutUs();
     // Get.toNamed(AppRoutes.ABOUT_US);
@@ -60,6 +65,8 @@ class MineLogic extends GetxController {
       } catch (e) {
         // AppNavigator.startLogin();
         IMWidget.showToast('e:$e');
+        await DataPersistence.removeLoginCertificate();
+        pushLogic.logout();
       }
     }
   }

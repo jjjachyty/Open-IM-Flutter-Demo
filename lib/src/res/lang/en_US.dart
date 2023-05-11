@@ -38,6 +38,8 @@ const Map<String, String> en_US = {
   'markRead': 'Mark read',
   "album": "Album",
   "camera": "Camera",
+  "invitation": "My Invitation Code",
+  "shareRegister": "Invitation to register",
   "videoCall": "Video Call",
   "live": "Live",
   "picture": "Picture",

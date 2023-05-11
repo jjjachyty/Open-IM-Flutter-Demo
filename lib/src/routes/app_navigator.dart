@@ -343,6 +343,10 @@ class AppNavigator {
     Get.toNamed(AppRoutes.ACCOUNT_SETUP);
   }
 
+  static void startShareApp() {
+    Get.toNamed(AppRoutes.SHARE_APP);
+  }
+
   static void startAboutUs() {
     Get.toNamed(AppRoutes.ABOUT_US);
   }

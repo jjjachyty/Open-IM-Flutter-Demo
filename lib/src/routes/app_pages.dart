@@ -104,6 +104,9 @@ import 'package:openim_demo/src/pages/select_contacts/select_contacts_view.dart'
 import 'package:openim_demo/src/pages/splash/splash_binding.dart';
 import 'package:openim_demo/src/pages/splash/splash_view.dart';
 
+import '../pages/mine/share/share_binding.dart';
+import '../pages/mine/share/share_view.dart';
+
 part 'app_routes.dart';
 
 class AppPages {
@@ -377,6 +380,11 @@ class AppPages {
       name: AppRoutes.FORGET_PASSWORD,
       page: () => ForgetPasswordPage(),
       binding: ForgetPasswordBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.SHARE_APP,
+      page: () => ShareAppPage(),
+      binding: ShareAppBinding(),
     ),
   ];
 }

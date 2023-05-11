@@ -189,6 +189,18 @@ class Apis {
     );
   }
 
+  static Future<dynamic> getUserSelfInfo(String userID) async {
+    return HttpUtil.post(
+      Urls.userSelfInfo,
+      data: {
+        'platform': await IMUtil.getPlatform(),
+        'operationID': _getOperationID(),
+        'userID': userID,
+      },
+      options: chatTokenOptions,
+    );
+  }
+
   static Future<dynamic> getRTCToken({
     String uid = "0",
     required String channelName,
@@ -441,5 +453,19 @@ class Apis {
       showErrorToast: false,
     );
     return result;
+  }
+
+//直播
+  static Future<dynamic> startLive(int userID, int channelID) async {
+    return HttpUtil.post(
+      Urls.startLive,
+      data: {
+        'platform': await IMUtil.getPlatform(),
+        'operationID': _getOperationID(),
+        'userID': userID,
+        'channelID': channelID,
+      },
+      options: chatTokenOptions,
+    );
   }
 }

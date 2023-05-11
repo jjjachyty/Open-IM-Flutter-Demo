@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:developer';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:agora_rtm/agora_rtm.dart';
@@ -7,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_openim_widget/flutter_openim_widget.dart';
 import 'package:get/get.dart';
 import 'package:openim_demo/src/common/apis.dart';
+import 'package:openim_demo/src/core/controller/im_controller.dart';
 import 'package:openim_demo/src/pages/chat/chat_logic.dart';
-import 'package:openim_demo/src/pages/conversation/conversation_logic.dart';
 import 'package:openim_demo/src/utils/data_persistence.dart';
 import 'package:openim_demo/src/widgets/agora/components/log_sink.dart';
 import 'package:openim_demo/src/widgets/agora/config/agora.config.dart'
@@ -16,6 +17,8 @@ import 'package:openim_demo/src/widgets/agora/config/agora.config.dart'
 import 'package:permission_handler/permission_handler.dart';
 
 class LivingLogic extends GetxController {
+  final imLogic = Get.find<IMController>();
+
   String? uid;
   String? gid;
   AgoraRtmClient? _client;
@@ -25,8 +28,9 @@ class LivingLogic extends GetxController {
   var isJoined = false.obs, switchCamera = true.obs, switchRender = true.obs;
   var remoteUid = 0.obs;
   late TextEditingController _controller;
+  final ScrollController scrollController = ScrollController();
 
-  var massages = [].obs;
+  RxList<Message> massages = <Message>[].obs;
   ChannelProfileType _channelProfileType =
       ChannelProfileType.channelProfileLiveBroadcasting;
   final chatLogic = Get.find<ChatLogic>();
@@ -46,6 +50,49 @@ class LivingLogic extends GetxController {
     _controller = TextEditingController(text: gid);
     _initEngine();
     super.onInit();
+
+    imLogic.onRecvNewMessage = (Message message) {
+      if (message.contentType == MessageType.LivingMsg) {
+        log("收到直播消息>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        massages.add(message);
+      }
+    };
+  }
+
+  Future<void> sendLiveMessage(content) async {
+    var message = await OpenIM.iMManager.messageManager.createTextMessage(
+      text: content,
+    );
+    message.groupID = gid!;
+    message.contentType = MessageType.LivingMsg;
+    message.sessionType = ConversationType.live;
+    scrollController.jumpTo(scrollController.position.maxScrollExtent);
+    _sendMessage(message);
+  }
+
+  void _sendMessage(Message message, {String? userId, String? groupId}) {
+    log('send : ${json.encode(message)}');
+    if (null == userId && null == groupId) {
+      massages.add(message);
+      // scrollBottom();
+    }
+    print('uid:$uid  userId:$userId  gid:$gid    groupId:$groupId');
+    // _reset();
+    OpenIM.iMManager.messageManager
+        .sendMessage(
+          message: message,
+          userID: userId ?? uid,
+          groupID: groupId ?? gid,
+          offlinePushInfo: OfflinePushInfo(
+            title: '你收到了一条新消息',
+            desc: '',
+            iOSBadgeCount: true,
+            iOSPushSound: '+1',
+          ),
+        )
+        .then((value) => log("成功"))
+        .catchError((e) => log("失败${e}"))
+        .whenComplete(() => log("完成"));
   }
 
   @override
@@ -93,7 +140,7 @@ class LivingLogic extends GetxController {
 
     // 开启视频
     // await engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
-    await engine.enableVideo();
+    // await engine.enableVideo();
     // await engine.startPreview();
 
     // 加入频道，设置用户角色为主播
@@ -116,44 +163,5 @@ class LivingLogic extends GetxController {
 
   Future<void> leaveChannel() async {
     await engine.leaveChannel();
-  }
-
-  void _createClient() async {
-    _client = await AgoraRtmClient.createInstance(config.appId);
-    _client?.onMessageReceived = (AgoraRtmMessage message, String peerId) {
-      log("Peer msg: $peerId, msg: ${message.text}");
-    };
-    _client?.onConnectionStateChanged = (int state, int reason) {
-      log('Connection state changed: $state, reason: $reason');
-      if (state == 5) {
-        _client?.logout();
-        log('Logout.');
-      }
-    };
-    _client?.onLocalInvitationReceivedByPeer =
-        (AgoraRtmLocalInvitation invite) {
-      log('Local invitation received by peer: ${invite.calleeId}, content: ${invite.content}');
-    };
-    _client?.onRemoteInvitationReceivedByPeer =
-        (AgoraRtmRemoteInvitation invite) {
-      log('Remote invitation received by peer: ${invite.callerId}, content: ${invite.content}');
-    };
-  }
-
-  Future<AgoraRtmChannel?> _createChannel(String name) async {
-    AgoraRtmChannel? channel = await _client?.createChannel(name);
-    if (channel != null) {
-      channel.onMemberJoined = (AgoraRtmMember member) {
-        log('Member joined: ${member.userId}, channel: ${member.channelId}');
-      };
-      channel.onMemberLeft = (AgoraRtmMember member) {
-        log('Member left: ${member.userId}, channel: ${member.channelId}');
-      };
-      channel.onMessageReceived =
-          (AgoraRtmMessage message, AgoraRtmMember member) {
-        log("Channel msg: ${member.userId}, msg: ${message.text}");
-      };
-    }
-    return channel;
   }
 }
