@@ -55,8 +55,8 @@ class StartLivingLogic extends GetxController {
 
   Future<void> getUserLive() async {
     var userInfo = await Apis.getUserSelfInfo(uid!);
-    if (userInfo != null && userInfo["leftDuration"] != "") {
-      leftDuration.value = int.parse(userInfo["leftDuration"]);
+    if (userInfo != null && userInfo["leftDuration"] != null) {
+      leftDuration.value = (userInfo["leftDuration"]);
     }
   }
 

@@ -5,7 +5,7 @@ import 'package:openim_demo/src/core/controller/im_controller.dart';
 import 'package:openim_demo/src/res/images.dart';
 import 'package:openim_demo/src/res/strings.dart';
 import 'package:openim_demo/src/res/styles.dart';
-import 'package:openim_demo/src/utils/icon_font.dart';
+import 'package:openim_demo/src/utils/IconFontIcons.dart';
 import 'package:openim_demo/src/widgets/avatar_view.dart';
 
 import 'mine_logic.dart';
@@ -137,7 +137,10 @@ class MinePage extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Icon(icon),
+              Icon(
+                icon,
+                color: Colors.blue,
+              ),
               SizedBox(width: 13.w),
               Text(
                 label,

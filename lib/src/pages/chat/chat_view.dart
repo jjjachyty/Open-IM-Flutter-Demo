@@ -9,6 +9,7 @@ import 'package:openim_demo/src/res/styles.dart';
 import 'package:openim_demo/src/widgets/chat_listview.dart';
 import 'package:openim_demo/src/widgets/titlebar.dart';
 
+import '../../utils/IconFontIcons.dart';
 import 'chat_logic.dart';
 
 class ChatPage extends StatelessWidget {
@@ -111,7 +112,7 @@ class ChatPage extends StatelessWidget {
                         ? logic.groupInfo!.value.memberCount
                         : null,
                     subTitle: logic.getSubTile(),
-                    isLiving: true, //logic.isLiving.value,
+                    isLiving: logic.channelID.value != "",
                     goLiving: logic.goWatchLiving,
                     onClickCallBtn: () => logic.call(),
                     onClickMoreBtn: () => logic.chatSetup(),
@@ -145,15 +146,30 @@ class ChatPage extends StatelessWidget {
                             onTapCamera: () => logic.onTapCamera(),
                             onTapCarte: () => logic.onTapCarte(),
                             onTapFile: () => logic.onTapFile(),
-                            onTapLocation: () => logic.onTapLocation(),
+                            // onTapLocation: () => logic.onTapLocation(),
                             onTapVideoCall: () => logic.call(),
                             onTapLive: () => logic.live(),
                             onStopVoiceInput: () => logic.onStopVoiceInput(),
                             onStartVoiceInput: () => logic.onStartVoiceInput(),
-                            liveIcon: Image.asset(
-                              "assets/images/ic_tools_live.webp",
-                              width: 48.h,
-                              height: 48.h,
+                            liveIcon: Icon(
+                              IconFontIcons.iconZhibo,
+                              color: Colors.blue,
+                            ),
+                            cameraIcon: Icon(
+                              IconFontIcons.iconPost_pic,
+                              color: Colors.blue,
+                            ),
+                            fileIcon: Icon(
+                              IconFontIcons.iconWenjian,
+                              color: Colors.blue,
+                            ),
+                            albumIcon: Icon(
+                              IconFontIcons.iconXiangce,
+                              color: Colors.blue,
+                            ),
+                            carteIcon: Icon(
+                              IconFontIcons.iconZhanghu,
+                              color: Colors.blue,
                             ),
                           ),
                           multiOpToolbox: ChatMultiSelToolbox(

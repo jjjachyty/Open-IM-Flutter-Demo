@@ -20,14 +20,14 @@ class LivingLogic extends GetxController {
   final imLogic = Get.find<IMController>();
 
   String? uid;
-  String? gid;
+  String? channelID;
+  String? rtcToken;
   AgoraRtmClient? _client;
   AgoraRtmChannel? _channel;
 
   late final RtcEngineEx engine;
   var isJoined = false.obs, switchCamera = true.obs, switchRender = true.obs;
   var remoteUid = 0.obs;
-  late TextEditingController _controller;
   final ScrollController scrollController = ScrollController();
 
   RxList<Message> massages = <Message>[].obs;
@@ -46,24 +46,25 @@ class LivingLogic extends GetxController {
 
     var arguments = Get.arguments;
     uid = DataPersistence.getLoginCertificate()!.userID;
-    gid = arguments['gid'];
-    _controller = TextEditingController(text: gid);
+    channelID = arguments['channelID'];
+    rtcToken = arguments['rtcToken'];
     _initEngine();
-    super.onInit();
 
     imLogic.onRecvNewMessage = (Message message) {
-      if (message.contentType == MessageType.LivingMsg) {
+      if (message.contentType == MessageType.LivingMsg &&
+          message.groupID == channelID) {
         log("收到直播消息>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         massages.add(message);
       }
     };
+    super.onInit();
   }
 
   Future<void> sendLiveMessage(content) async {
     var message = await OpenIM.iMManager.messageManager.createTextMessage(
       text: content,
     );
-    message.groupID = gid!;
+    message.liveID = channelID!;
     message.contentType = MessageType.LivingMsg;
     message.sessionType = ConversationType.live;
     scrollController.jumpTo(scrollController.position.maxScrollExtent);
@@ -76,13 +77,13 @@ class LivingLogic extends GetxController {
       massages.add(message);
       // scrollBottom();
     }
-    print('uid:$uid  userId:$userId  gid:$gid    groupId:$groupId');
+    print('uid:$uid  userId:$userId  channelID:$channelID    groupId:$groupId');
     // _reset();
     OpenIM.iMManager.messageManager
         .sendMessage(
           message: message,
           userID: userId ?? uid,
-          groupID: groupId ?? gid,
+          groupID: "",
           offlinePushInfo: OfflinePushInfo(
             title: '你收到了一条新消息',
             desc: '',
@@ -90,7 +91,7 @@ class LivingLogic extends GetxController {
             iOSPushSound: '+1',
           ),
         )
-        .then((value) => log("成功"))
+        .then((value) => log("成功${value.toJson()}"))
         .catchError((e) => log("失败${e}"))
         .whenComplete(() => log("完成"));
   }
@@ -150,11 +151,11 @@ class LivingLogic extends GetxController {
 
   Future<void> joinChannel() async {
     //获取rtc token
-    var rtcToken =
-        await Apis.getRTCToken(channelName: gid!, uid: uid!, role: 2);
+    // var rtcToken =
+    //     await Apis.getRTCToken(channelName: channelID!, uid: uid!, role: 2);
     await engine.joinChannel(
-        token: rtcToken['token'],
-        channelId: gid!,
+        token: rtcToken!,
+        channelId: channelID!,
         uid: int.parse(uid!),
         options: const ChannelMediaOptions(
           clientRoleType: ClientRoleType.clientRoleAudience,

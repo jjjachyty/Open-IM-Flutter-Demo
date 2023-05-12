@@ -33,4 +33,5 @@ class Urls {
   static final getClientConfig = '${Config.imApiUrl()}/init/get_client_config';
   //直播
   static var startLive = "${Config.imApiUrl()}/live/start";
+  static var joinLive = "${Config.imApiUrl()}/live/join";
 }

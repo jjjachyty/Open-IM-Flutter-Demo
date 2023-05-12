@@ -10,7 +10,7 @@ import '../../widgets/im_widget.dart';
 class ForgetPasswordLogic extends GetxController {
   var controller = TextEditingController();
   var showClearBtn = false.obs;
-  var isPhoneRegister = true;
+  var isPhoneRegister = false;
   var areaCode = "+86".obs;
   var enabled = false.obs;
 
@@ -55,7 +55,7 @@ class ForgetPasswordLogic extends GetxController {
 
   @override
   void onInit() {
-    isPhoneRegister = Get.arguments['accountType'] == "phone";
+    isPhoneRegister = false; //Get.arguments['accountType'] == "phone";
     super.onInit();
   }
 

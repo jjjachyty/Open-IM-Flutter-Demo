@@ -94,7 +94,7 @@ class Apis {
       "areaCode": areaCode,
       'phoneNumber': phoneNumber,
       'email': email,
-      'password': IMUtil.generateMD5(password),
+      'newPassword': IMUtil.generateMD5(password),
       'verificationCode': verificationCode,
       'platform': await IMUtil.getPlatform(),
       'operationID': _getOperationID(),
@@ -464,6 +464,22 @@ class Apis {
         'operationID': _getOperationID(),
         'userID': userID,
         'channelID': channelID,
+      },
+      options: chatTokenOptions,
+    );
+  }
+
+  static Future<dynamic> joinLive(
+      int channelID, int userID, String nickName, String faceURL) async {
+    return HttpUtil.post(
+      Urls.joinLive,
+      data: {
+        'platform': await IMUtil.getPlatform(),
+        'operationID': _getOperationID(),
+        'userID': userID,
+        'channelID': channelID,
+        'nickName': nickName,
+        'faceURL': faceURL,
       },
       options: chatTokenOptions,
     );

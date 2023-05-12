@@ -73,9 +73,11 @@ class ChatLogic extends GetxController {
   var name = ''.obs;
   var icon = ''.obs;
   Rx<GroupInfo>? groupInfo;
-  var isLiving = false.obs;
+  // var isLiving = true.obs;
+  var channelID = "".obs;
   var messageList = <Message>[].obs;
   var lastTime;
+  var isContinueVoice = false.obs;
   Timer? typingTimer;
   var typing = false.obs;
   var intervalSendTypingMsg = IntervalDo();
@@ -134,6 +136,7 @@ class ChatLogic extends GetxController {
     var arguments = Get.arguments;
     uid = arguments['uid'];
     gid = arguments['gid'];
+    channelID.value = gid!;
     name.value = arguments['name'];
     icon.value = arguments['icon'];
     // 获取在线状态
@@ -169,10 +172,10 @@ class ChatLogic extends GetxController {
           //直播逻辑处理更新群头像
           if (message.contentType == MessageType.StartLivingNotification) {
             //直播消息
-            isLiving.value = true;
+            channelID.value = message.liveID!;
           } else if (message.contentType ==
               MessageType.CloseLivingNotification) {
-            isLiving.value = false;
+            channelID.value = "";
           }
 
           if (!messageList.contains(message)) {
@@ -237,7 +240,7 @@ class ChatLogic extends GetxController {
     // 自定义消息点击事件
     clickSubject.listen((index) {
       print('index:$index');
-      parseClickEvent(indexOfMessage(index));
+      parseClickEvent(index, indexOfMessage(index));
     });
 
     // 输入框监听
@@ -261,7 +264,6 @@ class ChatLogic extends GetxController {
       if (gid == value.groupID) {
         name.value = value.groupName ?? '';
         icon.value = value.faceURL ?? '';
-        isLiving.value = value.isLiving ?? false;
       }
     });
 
@@ -572,9 +574,14 @@ class ChatLogic extends GetxController {
     // inputCtrl.clear();
   }
 
-  void goWatchLiving() {
-    if (null == gid || null == uid) return;
-    AppNavigator.startWatchLiving(gid: gid!, uid: uid!);
+  Future<void> goWatchLiving() async {
+    if ("" == gid) return;
+    Map<String, dynamic> user = await Apis.getUserSelfInfo(
+        DataPersistence.getLoginCertificate()!.userID) as Map<String, dynamic>;
+    var resp = await Apis.joinLive(int.parse(channelID.value),
+        int.parse(user["userID"]), user["nickname"], user["faceURL"]);
+    AppNavigator.startWatchLiving(
+        channelID: gid!, rtcToken: resp[0]["RtcToken"]);
   }
 
   /// 设置被回复的消息体
@@ -644,8 +651,16 @@ class ChatLogic extends GetxController {
         userID: uid!,
         messageIDList: [message.clientMsgID!],
       );
-      message.isRead = true;
     }
+    if (isGroupChat &&
+        visible &&
+        !message.isRead! &&
+        message.sendID != OpenIM.iMManager.uid) {
+      OpenIM.iMManager.messageManager.markGroupMessageAsRead(
+          groupID: gid!, messageIDList: [message.clientMsgID!]);
+    }
+    message.isRead = true;
+    messageList.refresh();
   }
 
   /// 合并转发
@@ -717,6 +732,7 @@ class ChatLogic extends GetxController {
   /// 触摸其他地方强制关闭工具箱
   void closeToolbox() {
     forceCloseToolbox.addSafely(true);
+    isContinueVoice.value = false;
   }
 
   /// 打开地图
@@ -829,7 +845,7 @@ class ChatLogic extends GetxController {
   }
 
   /// 处理消息点击事件
-  void parseClickEvent(Message msg) async {
+  void parseClickEvent(int index, Message msg) async {
     // log("message:${json.encode(msg)}");
     if (msg.contentType == MessageType.picture) {
       var list = messageList
@@ -840,11 +856,18 @@ class ChatLogic extends GetxController {
     } else if (msg.contentType == MessageType.video) {
       IMUtil.openVideo(msg);
     } else if (msg.contentType == MessageType.voice) {
-      msg.isRead = true;
-      messageList.refresh();
-      IMUtil.openVoice(msg);
-      OpenIM.iMManager.messageManager.markGroupMessageAsRead(
-          groupID: gid!, messageIDList: [msg.clientMsgID!]);
+      isContinueVoice.value = true;
+      //连续听语音
+      for (var i = index; i < messageList.length; i++) {
+        if (!isContinueVoice.value) return;
+        msg = messageList[i];
+        if (msg.contentType != MessageType.voice) {
+          continue;
+        }
+        await IMUtil.openVoice(msg);
+        markC2CMessageAsRead(index, msg, true);
+      }
+      isContinueVoice.value = false;
     } else if (msg.contentType == MessageType.file) {
       IMUtil.openFile(msg);
     } else if (msg.contentType == MessageType.card) {
@@ -874,7 +897,7 @@ class ChatLogic extends GetxController {
   /// 点击引用消息
   void onTapQuoteMsg(index) {
     var msg = indexOfMessage(index);
-    parseClickEvent(msg.quoteElem!.quoteMessage!);
+    parseClickEvent(index, msg.quoteElem!.quoteMessage!);
   }
 
   /// 拨视频或音频

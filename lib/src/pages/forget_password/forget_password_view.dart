@@ -34,10 +34,10 @@ class ForgetPasswordPage extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.only(left: 32.w, top: 44.h, right: 32.w),
                   child: Obx(() => PhoneInputBox(
-                    controller: logic.controller,
+                        controller: logic.controller,
                         labelStyle: PageStyle.ts_171A1D_14sp,
                         hintStyle: PageStyle.ts_171A1D0_opacity40p_17sp,
-                        textStyle: PageStyle.ts_171A1D_17sp,
+                        textStyle: PageStyle.ts_171A1D_18sp,
                         codeStyle: PageStyle.ts_171A1D_17sp,
                         arrowColor: PageStyle.c_000000,
                         clearBtnColor: PageStyle.c_000000_opacity40p,

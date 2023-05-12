@@ -38,6 +38,12 @@ class UpgradeManger {
         : Config.clientConfigMap["ios_version"];
   }
 
+  String? getUpdateDescription() {
+    return Platform.isAndroid
+        ? Config.clientConfigMap["android_update_description"]
+        : Config.clientConfigMap["ios_update_description"];
+  }
+
   void ignoreUpdate() {
     DataPersistence.putIgnoreVersion(getLastVersion());
     Get.back();
@@ -89,6 +95,7 @@ class UpgradeManger {
       updateVersion: getLastVersion(),
       packageInfo: packageInfo!,
       onNow: nowUpdate,
+      buildUpdateDescription: getUpdateDescription(),
       subject: subject,
     ));
   }
@@ -111,6 +118,7 @@ class UpgradeManger {
       needForceUpdate: true,
       updateVersion: getLastVersion(),
       packageInfo: packageInfo!,
+      buildUpdateDescription: getUpdateDescription(),
       onLater: laterUpdate,
       onIgnore: ignoreUpdate,
       onNow: nowUpdate,

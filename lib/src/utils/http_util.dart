@@ -171,7 +171,7 @@ class HttpUtil {
     return dio.download(
       url,
       cachePath,
-      options: Options(receiveTimeout: 60 * 1000),
+      options: Options(receiveTimeout: 10 * 60 * 1000),
       cancelToken: cancelToken,
       onReceiveProgress: onProgress,
     );

@@ -75,7 +75,7 @@ class ImageRes {
   static const ic_createGroup = "${_dir}ic_create_group.webp";
   static const ic_joinGroup = "${_dir}ic_join_group.webp";
   static const ic_scan = "${_dir}ic_scan.webp";
-  static const ic_mineHeadBg = "${_dir}ic_mine_header_bg.webp";
+  static const ic_mineHeadBg = "${_dir}avator_bg.jpg";
   static const ic_mineQrCode = "${_dir}ic_mine_qrcode.webp";
   static const ic_myInfo = "${_dir}ic_my_info.webp";
   static const ic_newsNotify = "${_dir}ic_news_notify.webp";
