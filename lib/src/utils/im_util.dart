@@ -170,9 +170,15 @@ class IMUtil {
   }
 
   static Future<void> openVoice(Message msg) async {
+    // await player.setFilePath(msg.soundElem!.soundPath!);
     await player.setFilePath(msg.soundElem!.soundPath!);
-    //await player.setUrl(msg.soundElem!.sourceUrl!);
     await player.play();
+
+    //  await player.setAudioSource(playlist, initialIndex: 0, initialPosition: Duration.zero);
+
+    // AudioPlayer player1 = AudioPlayer();
+    // await player1.setUrl(msg.soundElem!.sourceUrl!);
+    // await player1.play();
   }
 
   static void openFile(

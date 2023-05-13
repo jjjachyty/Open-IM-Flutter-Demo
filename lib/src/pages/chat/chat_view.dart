@@ -26,6 +26,7 @@ class ChatPage extends StatelessWidget {
         msgSendProgressSubject: logic.msgSendProgressSubject,
         multiSelMode: logic.multiSelMode.value,
         multiList: logic.multiSelList.value,
+        isPlayingSound: index == logic.playingIndex?.value,
         allAtMap: logic.atUserNameMappingMap,
         delaySendingStatus: true,
         onMultiSelChanged: (checked) {

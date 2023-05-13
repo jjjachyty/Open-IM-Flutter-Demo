@@ -192,7 +192,7 @@ class StartLivingLogic extends GetxController {
     // }
     // var rtcToken =
     //     await Apis.getRTCToken(channelName: gid!, uid: uid!, role: 1);
-    var rtcToken = await Apis.startLive(int.parse(uid!), int.parse(gid!));
+    var rtcToken = await Apis.startLive((uid!), (gid!));
 
     // await engine.joinChannelEx(
     //     token: rtcToken['token'],

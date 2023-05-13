@@ -26,8 +26,11 @@ class ConversationLogic extends GetxController {
       // getConversationListSplit();
       // getAllConversationList();
       // list.addAll(newList);
-      list.insertAll(0, newList);
-      _sortConversationList();
+      if (list.indexOf(newList) == -1) {
+        list.insertAll(0, newList);
+        _sortConversationList();
+      }
+
       // _parseDoNotDisturb(newList);
     });
     imLogic.conversationChangedSubject.listen((newList) {

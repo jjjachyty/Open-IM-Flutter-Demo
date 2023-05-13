@@ -456,7 +456,7 @@ class Apis {
   }
 
 //直播
-  static Future<dynamic> startLive(int userID, int channelID) async {
+  static Future<dynamic> startLive(String userID, String channelID) async {
     return HttpUtil.post(
       Urls.startLive,
       data: {
@@ -470,7 +470,7 @@ class Apis {
   }
 
   static Future<dynamic> joinLive(
-      int channelID, int userID, String nickName, String faceURL) async {
+      String channelID, String userID, String nickName, String faceURL) async {
     return HttpUtil.post(
       Urls.joinLive,
       data: {

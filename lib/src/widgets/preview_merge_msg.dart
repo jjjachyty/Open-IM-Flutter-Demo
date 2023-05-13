@@ -108,7 +108,7 @@ class PreviewMergeMsg extends StatelessWidget {
 
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
-      onTap: () => logic.parseClickEvent(index, message),
+      onTap: () => logic.parseClickEvent(message),
       child: Container(
         padding: EdgeInsets.only(
           left: 22.w,
