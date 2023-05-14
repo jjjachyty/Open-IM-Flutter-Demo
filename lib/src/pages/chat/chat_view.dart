@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_openim_widget/flutter_openim_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,6 +28,9 @@ class ChatPage extends StatelessWidget {
         msgSendProgressSubject: logic.msgSendProgressSubject,
         multiSelMode: logic.multiSelMode.value,
         multiList: logic.multiSelList.value,
+        onFailedResend: () {
+          logic.onFailedResend(index);
+        },
         isPlayingSound: index == logic.playingIndex?.value,
         allAtMap: logic.atUserNameMappingMap,
         delaySendingStatus: true,

@@ -21,6 +21,20 @@ class Apis {
   static final openIMMemberIDS = [];
   static final openIMGroupID = '082cad15fd27a2b6b875370e053ccd79';
 
+  static Future<dynamic> getAppversion(
+    String version,
+  ) async {
+    return HttpUtil.post(
+      Urls.appversion,
+      data: {
+        'operationID': _getOperationID(),
+        'type': await IMUtil.getPlatform(),
+        'version': version,
+      },
+      options: chatTokenOptions,
+    );
+  }
+
   /// login
   static Future<LoginCertificate> login({
     String? areaCode,

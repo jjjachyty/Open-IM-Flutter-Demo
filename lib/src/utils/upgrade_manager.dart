@@ -20,6 +20,7 @@ import 'im_util.dart';
 
 class UpgradeManger {
   PackageInfo? packageInfo;
+  late Map<String, dynamic> appVersion;
   var isShowUpgradeDialog = false;
   var isNowIgnoreUpdate = false;
   final subject = PublishSubject<double>();
@@ -33,15 +34,7 @@ class UpgradeManger {
   }
 
   String getLastVersion() {
-    return Platform.isAndroid
-        ? Config.clientConfigMap["android_version"]
-        : Config.clientConfigMap["ios_version"];
-  }
-
-  String? getUpdateDescription() {
-    return Platform.isAndroid
-        ? Config.clientConfigMap["android_update_description"]
-        : Config.clientConfigMap["ios_update_description"];
+    return appVersion["version"];
   }
 
   void ignoreUpdate() {
@@ -68,7 +61,7 @@ class UpgradeManger {
           fileName: '${packageInfo!.appName}.apk',
         );
         HttpUtil.download(
-          Config.clientConfigMap["android_url"],
+          appVersion['fileURL'],
           cachePath: path,
           onProgress: (int count, int total) {
             subject.add(count / total);
@@ -79,8 +72,8 @@ class UpgradeManger {
         );
       });
     } else {
-      if (await canLaunch(Config.clientConfigMap["ios_url"])) {
-        launch(Config.clientConfigMap["ios_url"]);
+      if (await canLaunch(appVersion['fileURL'])) {
+        launch(appVersion['fileURL']);
       }
     }
   }
@@ -91,11 +84,11 @@ class UpgradeManger {
       return;
     }
     Get.dialog(UpgradeViewV2(
-      needForceUpdate: true,
+      needForceUpdate: appVersion['forceUpdate'],
       updateVersion: getLastVersion(),
       packageInfo: packageInfo!,
       onNow: nowUpdate,
-      buildUpdateDescription: getUpdateDescription(),
+      buildUpdateDescription: appVersion['updateLog'],
       subject: subject,
     ));
   }
@@ -105,7 +98,9 @@ class UpgradeManger {
     if (!Platform.isAndroid) return;
     if (isShowUpgradeDialog || isNowIgnoreUpdate) return;
     await getAppInfo();
-    String lastVersion = Config.clientConfigMap['android_version'];
+    appVersion =
+        await Apis.getAppversion(packageInfo!.version) as Map<String, dynamic>;
+    String lastVersion = appVersion['version'];
 
     String? ignore = DataPersistence.getIgnoreVersion();
     if (ignore == lastVersion) {
@@ -115,10 +110,10 @@ class UpgradeManger {
     if (!canUpdate) return;
     isShowUpgradeDialog = true;
     Get.dialog(UpgradeViewV2(
-      needForceUpdate: true,
+      needForceUpdate: appVersion['forceUpdate'],
       updateVersion: getLastVersion(),
       packageInfo: packageInfo!,
-      buildUpdateDescription: getUpdateDescription(),
+      buildUpdateDescription: appVersion['updateLog'],
       onLater: laterUpdate,
       onIgnore: ignoreUpdate,
       onNow: nowUpdate,

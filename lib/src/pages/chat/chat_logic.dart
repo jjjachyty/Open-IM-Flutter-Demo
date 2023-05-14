@@ -516,6 +516,12 @@ class ChatLogic extends GetxController {
     _sendMessage(message);
   }
 
+  void onFailedResend(int index) {
+    var msg = indexOfMessage(index);
+    msg.status = MessageStatus.sending;
+    _sendMessage(msg, userId: uid, groupId: gid);
+  }
+
   void _sendMessage(Message message, {String? userId, String? groupId}) {
     log('send : ${json.encode(message)}');
     if (null == userId && null == groupId) {

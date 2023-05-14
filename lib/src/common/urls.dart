@@ -1,6 +1,7 @@
 import 'config.dart';
 
 class Urls {
+  static var appversion = "${Config.imApiUrl()}/third/get_download_url";
   static var register2 = "${Config.imApiUrl()}/demo/user_register";
   static var rtcToken = "${Config.imApiUrl()}/auth/rtc_token";
 
