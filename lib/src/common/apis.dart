@@ -450,7 +450,7 @@ class Apis {
   }
 
   static Options get chatTokenOptions =>
-      Options(headers: {'token': DataPersistence.getLoginCertificate()!.token});
+      Options(headers: {'token': DataPersistence.getLoginCertificate()?.token});
 
   /// discoverPageURL
   /// ordinaryUserAddFriend,
@@ -494,6 +494,18 @@ class Apis {
         'channelID': channelID,
         'nickName': nickName,
         'faceURL': faceURL,
+      },
+      options: chatTokenOptions,
+    );
+  }
+
+  static Future<dynamic> getLiveUsers(String channelID) async {
+    return HttpUtil.post(
+      Urls.liveUsers,
+      data: {
+        'platform': await IMUtil.getPlatform(),
+        'operationID': _getOperationID(),
+        'channelID': channelID,
       },
       options: chatTokenOptions,
     );

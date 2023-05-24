@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:agora_rtm/agora_rtm.dart';
+import 'package:flutter_openim_sdk/src/models/user_info.dart' as model;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_openim_widget/flutter_openim_widget.dart';
@@ -20,10 +21,13 @@ class LivingLogic extends GetxController {
   final imLogic = Get.find<IMController>();
 
   String? uid;
-  String? channelID;
+  late String channelID;
   String? rtcToken;
-  AgoraRtmClient? _client;
-  AgoraRtmChannel? _channel;
+  late model.UserInfo owner;
+  List<model.UserInfo>? users;
+  var currentView = 0.obs;
+  // AgoraRtmClient? _client;
+  // AgoraRtmChannel? _channel;
 
   late final RtcEngineEx engine;
   var isJoined = false.obs, switchCamera = true.obs, switchRender = true.obs;
@@ -48,15 +52,20 @@ class LivingLogic extends GetxController {
     uid = DataPersistence.getLoginCertificate()!.userID;
     channelID = arguments['channelID'];
     rtcToken = arguments['rtcToken'];
+    owner = arguments['owner'];
     _initEngine();
 
     imLogic.onRecvNewMessage = (Message message) {
       if (message.contentType == MessageType.LivingMsg &&
-          message.groupID == channelID) {
+          message.liveID == channelID) {
         log("收到直播消息>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         massages.add(message);
       }
     };
+    Apis.getLiveUsers(channelID).then((value) {
+      users = value["users"];
+      currentView.value = value["currentView"];
+    });
     super.onInit();
   }
 

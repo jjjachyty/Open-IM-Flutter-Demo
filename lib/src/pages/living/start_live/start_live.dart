@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:openim_demo/src/core/controller/im_controller.dart';
 
 import 'start_living_logic.dart';
 
@@ -30,6 +31,26 @@ class StartLiving extends StatelessWidget {
         AppBar(
           backgroundColor: Colors.transparent,
         ),
+        Positioned(
+            bottom: 10,
+            left: 5,
+            child: Container(
+              height: 250,
+              decoration: BoxDecoration(),
+              width: MediaQuery.of(context).size.width * 0.7,
+              child: Obx(() => ListView.builder(
+                    reverse: true,
+                    controller: logic.scrollController,
+                    itemBuilder: (context, index) {
+                      var item = logic.massages[index];
+                      return Text(
+                        (item.senderNickname! + ":" + item.content!),
+                        style: TextStyle(color: Colors.white),
+                      );
+                    },
+                    itemCount: logic.massages.length,
+                  )),
+            )),
         Positioned(
           bottom: 100.h,
           width: MediaQuery.of(context).size.width,

@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_openim_widget/flutter_openim_widget.dart';
 import 'package:get/get.dart';
 import 'package:openim_demo/src/common/apis.dart';
+import 'package:openim_demo/src/core/controller/im_controller.dart';
 import 'package:openim_demo/src/pages/chat/chat_logic.dart';
 import 'package:openim_demo/src/pages/conversation/conversation_logic.dart';
 import 'package:openim_demo/src/utils/data_persistence.dart';
@@ -18,13 +19,17 @@ import 'package:openim_demo/src/widgets/agora/config/agora.config.dart'
 import 'package:permission_handler/permission_handler.dart';
 
 class StartLivingLogic extends GetxController {
+  final imLogic = Get.find<IMController>();
+  RxList<Message> massages = <Message>[].obs;
+  String? channelID;
+
   String? uid;
-  String? gid;
   late final RtcEngineEx engine;
   bool isReadyPreview = false;
   dynamic rtcToken = "";
   var isJoined = false.obs;
   var leftDuration = 0.obs;
+  final ScrollController scrollController = ScrollController();
 
   var isScreenShared = false.obs;
   // var sourceType = VideoSourceType.videoSourceCamera.obs;
@@ -39,10 +44,17 @@ class StartLivingLogic extends GetxController {
   Future<void> onInit() async {
     var arguments = Get.arguments;
     uid = DataPersistence.getLoginCertificate()!.userID;
-    gid = arguments['gid'];
+    channelID = arguments['channelID'];
 
     _initEngine();
     getUserLive();
+    imLogic.onRecvNewMessage = (Message message) {
+      if (message.contentType == MessageType.LivingMsg &&
+          message.liveID == channelID) {
+        log("收到直播消息>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        massages.add(message);
+      }
+    };
     super.onInit();
   }
 
@@ -144,18 +156,20 @@ class StartLivingLogic extends GetxController {
         publishScreenCaptureVideo: true,
         clientRoleType: ClientRoleType.clientRoleBroadcaster,
       ),
-      connection: RtcConnection(channelId: gid, localUid: shareShareUid),
+      connection: RtcConnection(channelId: channelID, localUid: shareShareUid),
     );
   }
 
   Future<void> joinChannel() async {
     //获取rtc token
     if (rtcToken == "") {
-      rtcToken = await Apis.getRTCToken(channelName: gid!, uid: uid!, role: 1);
+      rtcToken =
+          await Apis.getRTCToken(channelName: channelID!, uid: uid!, role: 1);
     }
     await engine.joinChannelEx(
         token: rtcToken["token"],
-        connection: RtcConnection(channelId: gid, localUid: int.tryParse(uid!)),
+        connection:
+            RtcConnection(channelId: channelID, localUid: int.tryParse(uid!)),
         options: const ChannelMediaOptions(
           publishCameraTrack: true,
           publishMicrophoneTrack: true,
@@ -186,20 +200,20 @@ class StartLivingLogic extends GetxController {
     //关闭摄像头 改成屏幕共享
     // await engine.leaveChannelEx(
     //     connection:
-    //         RtcConnection(channelId: gid, localUid: int.tryParse(uid!)));
+    //         RtcConnection(channelId: channelID, localUid: int.tryParse(uid!)));
     // if (Platform.isAndroid) {
     //   await Permission.microphone.request();
     // }
     // var rtcToken =
-    //     await Apis.getRTCToken(channelName: gid!, uid: uid!, role: 1);
-    var rtcToken = await Apis.startLive((uid!), (gid!));
+    //     await Apis.getRTCToken(channelName: channelID!, uid: uid!, role: 1);
+    var rtcToken = await Apis.startLive((uid!), (channelID!));
 
     // await engine.joinChannelEx(
     //     token: rtcToken['token'],
-    //     // channelId: gid!,
+    //     // channelId: channelID!,
     //     // uid: int.parse(uid! + "1"),
     //     connection:
-    //         RtcConnection(channelId: gid, localUid: int.parse(uid! + "1")),
+    //         RtcConnection(channelId: channelID, localUid: int.parse(uid! + "1")),
     //     options: ChannelMediaOptions(
     //       channelProfile: ChannelProfileType.channelProfileLiveBroadcasting,
     //       clientRoleType: ClientRoleType.clientRoleBroadcaster,
@@ -208,7 +222,8 @@ class StartLivingLogic extends GetxController {
     // sourceType.value = VideoSourceType.videoSourceScreen;
     await engine.joinChannelEx(
         token: rtcToken[0]['RtcToken'],
-        connection: RtcConnection(channelId: gid, localUid: int.parse(uid!)),
+        connection:
+            RtcConnection(channelId: channelID, localUid: int.parse(uid!)),
         options: const ChannelMediaOptions(
           autoSubscribeVideo: true,
           autoSubscribeAudio: true,
@@ -229,7 +244,7 @@ class StartLivingLogic extends GetxController {
     if (!isScreenShared.value) return;
     await engine.leaveChannelEx(
         connection:
-            RtcConnection(channelId: gid, localUid: int.tryParse(uid!)));
+            RtcConnection(channelId: channelID, localUid: int.tryParse(uid!)));
     await engine.stopScreenCapture();
     await joinChannel();
   }

@@ -35,4 +35,5 @@ class Urls {
   //直播
   static var startLive = "${Config.imApiUrl()}/live/start";
   static var joinLive = "${Config.imApiUrl()}/live/join";
+  static var liveUsers = "${Config.imApiUrl()}/live/users";
 }

@@ -588,7 +588,12 @@ class ChatLogic extends GetxController {
     var resp = await Apis.joinLive(
         channelID.value, (user["userID"]), user["nickname"], user["faceURL"]);
     AppNavigator.startWatchLiving(
-        channelID: gid!, rtcToken: resp[0]["RtcToken"]);
+        channelID: gid!,
+        rtcToken: resp[1]["rtcToken"],
+        owner: UserInfo(
+            nickname: resp[0]["nickName"],
+            faceURL: resp[0]["faceURL"],
+            userID: resp[0]["userID"]));
   }
 
   /// 设置被回复的消息体
@@ -940,7 +945,7 @@ class ChatLogic extends GetxController {
   ///开始直播
   void live() {
     if (null == gid || null == uid) return;
-    AppNavigator.startLiving(gid: gid!, uid: uid!);
+    AppNavigator.startLiving(channelID: gid!, uid: uid!);
   }
 
   /// 群聊天长按头像为@用户

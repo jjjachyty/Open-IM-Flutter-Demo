@@ -260,17 +260,20 @@ class AppNavigator {
   }
 
   static void startWatchLiving(
-      {required String channelID, required String rtcToken}) {
+      {required String channelID,
+      required String rtcToken,
+      required UserInfo owner}) {
     Get.toNamed(AppRoutes.WATCH_LIVING, arguments: {
       'channelID': channelID,
       'rtcToken': rtcToken,
+      'owner': owner,
     });
   }
 
-  static void startLiving({required String gid, required String uid}) {
+  static void startLiving({required String channelID, required String uid}) {
     Get.toNamed(AppRoutes.START_LIVING, arguments: {
-      'gid': gid,
       'uid': uid,
+      'channelID': channelID,
     });
   }
 

@@ -19,17 +19,23 @@ class SplashLogic extends GetxController {
   String? get uid => loginCertificate?.userID;
 
   String? get token => loginCertificate?.token;
-
+  var isReady = false.obs;
   late StreamSubscription initializedSub;
 
   @override
   void onInit() {
     initializedSub = imLogic.initializedSubject.listen((value) async {
       print('---------------------initialized---------------------');
+
       if (isExistLoginCertificate) {
         await _login();
       } else {
         AppNavigator.startLogin();
+      }
+    });
+    Future.delayed(Duration(seconds: 9), () {
+      if (isReady.value) {
+        AppNavigator.startMain();
       }
     });
     super.onInit();
@@ -40,6 +46,10 @@ class SplashLogic extends GetxController {
     super.onReady();
   }
 
+  goMain() {
+    AppNavigator.startMain();
+  }
+
   _login() async {
     try {
       print('---------login---------- uid: $uid, token: $token');
@@ -47,7 +57,8 @@ class SplashLogic extends GetxController {
       print('---------im login success-------');
       pushLogic.login(uid!);
       print('---------jpush login success----');
-      AppNavigator.startMain();
+      // AppNavigator.startMain();
+      isReady.value = true;
     } catch (e) {
       IMWidget.showToast('$e');
       AppNavigator.startLogin();

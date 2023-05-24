@@ -1,6 +1,8 @@
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:openim_demo/src/widgets/avatar_view.dart';
 
 import 'living_logic.dart';
 
@@ -13,6 +15,10 @@ class WatchLivingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         key: scaffoldkey,
+        endDrawer: Drawer(
+          width: 200,
+          child: _userList(),
+        ),
         floatingActionButton: IconButton(
           icon: Icon(
             Icons.message,
@@ -30,6 +36,7 @@ class WatchLivingPage extends StatelessWidget {
                           child: TextField(
                         autofocus: true,
                         textInputAction: TextInputAction.send,
+                        decoration: InputDecoration(hintText: "请使用文明用语"),
                         keyboardType: TextInputType.text,
                         onSubmitted: (value) {
                           logic.sendLiveMessage(value);
@@ -56,9 +63,47 @@ class WatchLivingPage extends StatelessWidget {
                     ),
                   ),
                 )),
-          AppBar(
-            backgroundColor: Colors.transparent,
-          ),
+          Positioned(
+              top: 40,
+              left: 5,
+              child: Container(
+                height: 40,
+                width: MediaQuery.of(context).size.width,
+                color: Colors.transparent,
+                child: Row(
+                  children: [
+                    Expanded(
+                        flex: 7,
+                        child: Container(
+                          child: Row(
+                            children: [
+                              IconButton(
+                                  onPressed: () => Navigator.of(context).pop(),
+                                  icon: Icon(Icons.arrow_back)),
+                              CircleAvatar(
+                                  backgroundImage: Image.network(
+                                logic.owner.faceURL ?? "",
+                                height: 10.h,
+                                width: 10.w,
+                              ).image),
+                              Text(logic.owner.nickname ?? "")
+                            ],
+                          ),
+                        )),
+                    Expanded(
+                        flex: 2,
+                        child: Text(
+                          '${logic.currentView} 人',
+                          style: TextStyle(),
+                        )),
+                    IconButton(
+                        onPressed: () {
+                          scaffoldkey.currentState?.openEndDrawer();
+                        },
+                        icon: Icon(Icons.more_horiz))
+                  ],
+                ),
+              )),
           Positioned(
               bottom: 10,
               left: 5,
@@ -92,5 +137,17 @@ class WatchLivingPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _userList() {
+    return ListView.builder(
+        itemCount: logic.users?.length ?? 0,
+        itemBuilder: (context, i) {
+          return ListTile(
+            leading: CircleAvatar(
+              backgroundImage: NetworkImage(logic.users?[i].faceURL ?? ""),
+            ),
+          );
+        });
   }
 }

@@ -95,7 +95,8 @@ class AppController extends GetxController with UpgradeManger {
     if (data is im.Message) {
       // id = data.seq!;
       // 排除typing消息
-      if (data.contentType != im.MessageType.typing) {
+      if (data.contentType != im.MessageType.typing &&
+          data.contentType != im.MessageType.LivingMsg) {
         showing = await _noDisturb(data);
       }
     }
