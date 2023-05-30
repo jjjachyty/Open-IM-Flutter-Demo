@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_openim_widget/flutter_openim_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:openim_demo/src/common/config.dart';
 import 'package:openim_demo/src/core/controller/im_controller.dart';
 import 'package:openim_demo/src/res/images.dart';
 import 'package:openim_demo/src/res/strings.dart';
@@ -86,9 +87,11 @@ class ConversationPage extends StatelessWidget {
                 height: 70.h,
                 contentWidth: 180.w,
                 avatarSize: 48.h,
+
                 underline: false,
-                titleStyle: PageStyle.ts_333333_16sp,
-                contentStyle: PageStyle.ts_666666_14sp,
+                textScaleFactor: Config.textScaleFactor,
+                titleStyle: PageStyle.ts_333333_18sp,
+                contentStyle: PageStyle.ts_666666_18sp,
                 contentPrefixStyle: PageStyle.ts_F44038_13sp,
                 timeStyle: PageStyle.ts_999999_12sp,
                 extentRatio: logic.existUnreadMsg(index) ? 0.6 : 0.4,

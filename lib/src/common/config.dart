@@ -45,7 +45,7 @@ class Config {
   static final String deptID = '0';
 
   /// 全局字体size在原有ui上增大1.2倍
-  static final double textScaleFactor = 1;
+  static final double textScaleFactor = 1.2;
 
   /// 秘钥
   static const secret = 'tuoyun';

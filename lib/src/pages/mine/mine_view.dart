@@ -99,11 +99,11 @@ class MinePage extends StatelessWidget {
             label: StrRes.myInfo,
             onTap: () => logic.viewMyInfo(),
           ),
-          _buildItemView(
-            icon: IconFontIcons.iconFenxiangzhuce,
-            label: StrRes.shareRegister,
-            onTap: () => logic.shareApp(),
-          ),
+          // _buildItemView(
+          //   icon: IconFontIcons.iconFenxiangzhuce,
+          //   label: StrRes.shareRegister,
+          //   onTap: () => logic.shareApp(),
+          // ),
           _buildItemView(
             icon: IconFontIcons.iconZhanghaoshezhi,
             label: StrRes.accountSetup,
@@ -139,7 +139,7 @@ class MinePage extends StatelessWidget {
             children: [
               Icon(
                 icon,
-                color: Colors.blue,
+                color: Colors.grey,
               ),
               SizedBox(width: 13.w),
               Text(

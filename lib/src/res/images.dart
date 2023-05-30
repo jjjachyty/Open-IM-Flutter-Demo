@@ -1,7 +1,8 @@
 class ImageRes {
   static const _dir = "assets/images/";
-  static const ic_loginBg = "${_dir}ic_login_bg.webp";
-  static const ic_registerBg = "${_dir}ic_register_bg.webp";
+  static const ic_loginBg = "${_dir}ic_login_bg.png";
+  static const ic_registerBg = "${_dir}ic_register_bg.png";
+  static const ic_smsBg = "${_dir}sms.png";
   static const ic_areaCodeMoreArrow = "${_dir}ic_areacode_more.webp";
   static const ic_clearInput = "${_dir}ic_clear_input.webp";
   static const ic_eyeOpen = "${_dir}ic_eye_open.webp";
@@ -75,7 +76,7 @@ class ImageRes {
   static const ic_createGroup = "${_dir}ic_create_group.webp";
   static const ic_joinGroup = "${_dir}ic_join_group.webp";
   static const ic_scan = "${_dir}ic_scan.webp";
-  static const ic_mineHeadBg = "${_dir}avator_bg.jpg";
+  static const ic_mineHeadBg = "${_dir}me_bg.png";
   static const ic_mineQrCode = "${_dir}ic_mine_qrcode.webp";
   static const ic_myInfo = "${_dir}ic_my_info.webp";
   static const ic_newsNotify = "${_dir}ic_news_notify.webp";

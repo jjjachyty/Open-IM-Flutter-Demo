@@ -268,7 +268,7 @@ class PageStyle {
   );
   static var ts_999999_18sp = TextStyle(
     fontSize: 18.sp,
-    color: Color.fromARGB(255, 238, 238, 238),
+    color: Color.fromARGB(255, 136, 136, 136),
   );
   static var ts_666666_12sp = TextStyle(
     fontSize: 12.sp,
@@ -419,11 +419,11 @@ class PageStyle {
   );
   static var ts_171A1D_18sp = TextStyle(
     fontSize: 18.sp,
-    color: Color(0xFF171A1D),
+    color: Color.fromARGB(255, 246, 247, 248),
   );
   static var ts_171A1D_26sp_medium = TextStyle(
     fontSize: 26.sp,
-    color: Color(0xFF171A1D),
+    color: Color.fromARGB(255, 251, 252, 253),
     fontWeight: FontWeight.w500,
   );
   static var ts_171A1D0_opacity40p_17sp = TextStyle(

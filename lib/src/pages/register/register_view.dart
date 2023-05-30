@@ -24,7 +24,7 @@ class RegisterPage extends StatelessWidget {
           child: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage(ImageRes.ic_registerBg),
+                  image: AssetImage(ImageRes.ic_loginBg),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -64,9 +64,10 @@ class RegisterPage extends StatelessWidget {
                               NameInputBox(
                                 topLabel: StrRes.invitationCode,
                                 topLabelStyle: PageStyle.ts_000000_14sp,
+                                textStyle: PageStyle.ts_171A1D_17sp,
                                 hintText:
                                     '${StrRes.plsInputInvitationCode}${logic.needInvitationCodeRegister ? '' : StrRes.optional}',
-                                hintStyle: PageStyle.ts_999999_18sp,
+                                hintStyle: PageStyle.ts_171A1D0_opacity40p_17sp,
                                 controller: logic.invitationCodeCtrl,
                               ),
                               116.verticalSpace,

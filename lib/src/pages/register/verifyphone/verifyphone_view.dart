@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:openim_demo/src/res/images.dart';
 import 'package:openim_demo/src/res/strings.dart';
 import 'package:openim_demo/src/res/styles.dart';
 import 'package:openim_demo/src/widgets/titlebar.dart';
@@ -17,10 +18,18 @@ class VerifyPhonePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TouchCloseSoftKeyboard(
-      child: Scaffold(
-        backgroundColor: Color.fromARGB(255, 87, 154, 212),
-        body: SafeArea(
+    return Scaffold(
+        body: Container(
+      width: 1.sw,
+      height: 1.sh,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(ImageRes.ic_smsBg),
+          fit: BoxFit.fill,
+        ),
+      ),
+      child: TouchCloseSoftKeyboard(
+        child: SafeArea(
           child: SingleChildScrollView(
             child: Container(
               margin: EdgeInsets.symmetric(horizontal: 32.w),
@@ -49,6 +58,7 @@ class VerifyPhonePage extends StatelessWidget {
                   PinCodeTextField(
                     appContext: context,
                     controller: logic.codeEditCtrl,
+                    textStyle: PageStyle.ts_171A1D_26sp_medium,
                     autoFocus: true,
                     // pastedTextStyle: TextStyle(
                     //   color: Colors.green.shade600,
@@ -84,7 +94,7 @@ class VerifyPhonePage extends StatelessWidget {
                       // fieldWidth: 40,
                       // activeFillColor: Colors.white,
                     ),
-                    cursorColor: Colors.black,
+                    cursorColor: Color.fromARGB(255, 250, 248, 248),
                     animationDuration: Duration(milliseconds: 300),
                     // enableActiveFill: true,
                     errorAnimationController: logic.codeErrorCtrl,
@@ -133,6 +143,6 @@ class VerifyPhonePage extends StatelessWidget {
           ),
         ),
       ),
-    );
+    ));
   }
 }
