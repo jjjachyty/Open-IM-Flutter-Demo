@@ -27,7 +27,7 @@ class MyQrcodeLogic extends GetxController {
   }
 
   String buildQRContent() {
-    return '${IMQrcodeUrl.addFriend}${imLogic.userInfo.value.userID}';
+    return "https://www.push131.com"; //'${IMQrcodeUrl.addFriend}${imLogic.userInfo.value.userID}';
   }
 
   String getInvitationCode() {
