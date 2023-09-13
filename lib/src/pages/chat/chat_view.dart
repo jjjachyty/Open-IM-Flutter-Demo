@@ -154,15 +154,15 @@ class ChatPage extends StatelessWidget {
                             onTapCamera: () => logic.onTapCamera(),
                             onTapCarte: () => logic.onTapCarte(),
                             onTapFile: () => logic.onTapFile(),
-                            // onTapLocation: () => logic.onTapLocation(),
+                            onTapLocation: () => logic.onTapLocation(),
                             onTapVideoCall: () => logic.call(),
-                            // onTapLive: () => logic.live(),
+                            onTapLive: () => logic.live(),
                             onStopVoiceInput: () => logic.onStopVoiceInput(),
                             onStartVoiceInput: () => logic.onStartVoiceInput(),
-                            // liveIcon: Icon(
-                            //   IconFontIcons.iconZhibo,
-                            //   color: Colors.blue,
-                            // ),
+                            liveIcon: Icon(
+                              IconFontIcons.iconZhibo,
+                              color: Colors.blue,
+                            ),
                             cameraIcon: Icon(
                               IconFontIcons.iconPost_pic,
                               color: Colors.blue,
