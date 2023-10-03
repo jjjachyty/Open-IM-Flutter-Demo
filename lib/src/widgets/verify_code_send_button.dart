@@ -18,7 +18,7 @@ class VerifyCodeSendButton extends StatefulWidget {
 
   const VerifyCodeSendButton({
     Key? key,
-    this.sec: 60,
+    this.sec = 60,
     this.auto = true,
     required this.onTapCallback,
   }) : super(key: key);

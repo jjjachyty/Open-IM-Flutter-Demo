@@ -1,4 +1,3 @@
-import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:flutter_openim_widget/flutter_openim_widget.dart';
 import 'package:get/get.dart';
 import 'package:openim_demo/src/common/apis.dart';
@@ -27,23 +26,21 @@ class GroupMemberManagerLogic extends GetxController {
     var list = await OpenIM.iMManager.groupManager.getGroupMemberListMap(
       groupId: _groupInfo.groupID,
     );
-    if (list is List) {
-      for (var e in list) {
-        var member = en.GroupMembersInfo.fromJson(e);
-        // 1普通成员, 2群组，3管理员
-        if (member.roleLevel == 1) {
-          _memberList.add(member);
-        } else if (member.roleLevel == 2) {
-          _ownerList.add(member..tagIndex = '↑');
-        } else {
-          _adminList.add(member..tagIndex = '↑');
-        }
-        _uidList.add(member.userID!);
+    for (var e in list) {
+      var member = en.GroupMembersInfo.fromJson(e);
+      // 1普通成员, 2群组，3管理员
+      if (member.roleLevel == 1) {
+        _memberList.add(member);
+      } else if (member.roleLevel == 2) {
+        _ownerList.add(member..tagIndex = '↑');
+      } else {
+        _adminList.add(member..tagIndex = '↑');
       }
-      // memberList.addAll(IMUtil.convertToAZList(list).cast());
-      _sortList();
+      _uidList.add(member.userID!);
     }
-    _queryOnlineStatus();
+    // memberList.addAll(IMUtil.convertToAZList(list).cast());
+    _sortList();
+      _queryOnlineStatus();
   }
 
   void _sortList() {

@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
-import 'package:agora_rtm/agora_rtm.dart';
 import 'package:flutter_openim_sdk/src/models/user_info.dart' as model;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -73,7 +72,7 @@ class LivingLogic extends GetxController {
     var message = await OpenIM.iMManager.messageManager.createTextMessage(
       text: content,
     );
-    message.liveID = channelID!;
+    message.liveID = channelID;
     message.contentType = MessageType.LivingMsg;
     message.sessionType = ConversationType.live;
     scrollController.jumpTo(scrollController.position.maxScrollExtent);
@@ -101,7 +100,7 @@ class LivingLogic extends GetxController {
           ),
         )
         .then((value) => log("成功${value.toJson()}"))
-        .catchError((e) => log("失败${e}"))
+        .catchError((e) => log("失败$e"))
         .whenComplete(() => log("完成"));
   }
 
@@ -164,7 +163,7 @@ class LivingLogic extends GetxController {
     //     await Apis.getRTCToken(channelName: channelID!, uid: uid!, role: 2);
     await engine.joinChannel(
         token: rtcToken!,
-        channelId: channelID!,
+        channelId: channelID,
         uid: int.parse(uid!),
         options: const ChannelMediaOptions(
           clientRoleType: ClientRoleType.clientRoleAudience,

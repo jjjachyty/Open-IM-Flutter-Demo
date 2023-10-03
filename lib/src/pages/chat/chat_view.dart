@@ -1,11 +1,9 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_openim_widget/flutter_openim_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:openim_demo/src/common/config.dart';
-import 'package:openim_demo/src/pages/living/start_live/screen_sharing.dart';
 import 'package:openim_demo/src/res/images.dart';
 import 'package:openim_demo/src/res/strings.dart';
 import 'package:openim_demo/src/res/styles.dart';
@@ -33,7 +31,7 @@ class ChatPage extends StatelessWidget {
         onFailedResend: () {
           logic.onFailedResend(index);
         },
-        isPlayingSound: index == logic.playingIndex?.value,
+        isPlayingSound: index == logic.playingIndex.value,
         allAtMap: logic.atUserNameMappingMap,
         delaySendingStatus: true,
         onMultiSelChanged: (checked) {

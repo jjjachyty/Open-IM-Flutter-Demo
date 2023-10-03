@@ -2,7 +2,6 @@ import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:openim_demo/src/widgets/avatar_view.dart';
 
 import 'living_logic.dart';
 

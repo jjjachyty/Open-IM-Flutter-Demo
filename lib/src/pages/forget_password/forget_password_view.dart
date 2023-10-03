@@ -8,7 +8,6 @@ import '../../res/styles.dart';
 import '../../widgets/button.dart';
 import '../../widgets/phone_input_box.dart';
 import '../../widgets/titlebar.dart';
-import '../../widgets/touch_close_keyboard.dart';
 import 'forget_password_logic.dart';
 
 class ForgetPasswordPage extends StatelessWidget {

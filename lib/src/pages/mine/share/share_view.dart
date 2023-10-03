@@ -7,7 +7,6 @@ import 'package:openim_demo/src/res/strings.dart';
 import 'package:openim_demo/src/res/styles.dart';
 import 'package:openim_demo/src/widgets/avatar_view.dart';
 import 'package:openim_demo/src/widgets/im_widget.dart';
-import 'package:openim_demo/src/widgets/titlebar.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class ShareAppPage extends StatelessWidget {

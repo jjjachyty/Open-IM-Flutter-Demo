@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
-import 'package:agora_rtm/agora_rtm.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,13 +9,10 @@ import 'package:flutter_openim_widget/flutter_openim_widget.dart';
 import 'package:get/get.dart';
 import 'package:openim_demo/src/common/apis.dart';
 import 'package:openim_demo/src/core/controller/im_controller.dart';
-import 'package:openim_demo/src/pages/chat/chat_logic.dart';
-import 'package:openim_demo/src/pages/conversation/conversation_logic.dart';
 import 'package:openim_demo/src/utils/data_persistence.dart';
 import 'package:openim_demo/src/widgets/agora/components/log_sink.dart';
 import 'package:openim_demo/src/widgets/agora/config/agora.config.dart'
     as config;
-import 'package:permission_handler/permission_handler.dart';
 
 class StartLivingLogic extends GetxController {
   final imLogic = Get.find<IMController>();
