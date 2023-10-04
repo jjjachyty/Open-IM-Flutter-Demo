@@ -104,6 +104,8 @@ import 'package:openim_demo/src/pages/select_contacts/select_contacts_view.dart'
 import 'package:openim_demo/src/pages/splash/splash_binding.dart';
 import 'package:openim_demo/src/pages/splash/splash_view.dart';
 
+import '../pages/meeting/meet_binding.dart';
+import '../pages/meeting/meet_view.dart';
 import '../pages/mine/share/share_binding.dart';
 import '../pages/mine/share/share_view.dart';
 
@@ -385,6 +387,11 @@ class AppPages {
       name: AppRoutes.SHARE_APP,
       page: () => ShareAppPage(),
       binding: ShareAppBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.startMeeting,
+      page: () => StartMeetingPage(),
+      binding: MeetingBinding(),
     ),
   ];
 }

@@ -95,6 +95,7 @@ dependencies:
       ref: main
   just_audio: ^0.9.32
   agora_rtm: ^1.5.0
+  webview_flutter: ^4.4.1
 
 dev_dependencies:
   flutter_test:

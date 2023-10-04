@@ -61,6 +61,7 @@ abstract class AppRoutes {
   static const WATCH_LIVING = "/watch_live";
   static const START_LIVING = "/start_live";
   static const SHARE_APP = "/share_app";
+  static const startMeeting = "/start_meeting";
 }
 
 extension RoutesExtension on String {

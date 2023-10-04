@@ -419,4 +419,7 @@ class AppNavigator {
     Get.toNamed(AppRoutes.FORGET_PASSWORD,
         arguments: {"accountType": accountType});
   }
+    static void startMeeting() {
+    Get.toNamed(AppRoutes.startMeeting);
+  }
 }

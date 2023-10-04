@@ -455,4 +455,6 @@ class ConversationLogic extends GetxController {
         .then((list) => _parseDoNotDisturb(list))
         .whenComplete(() => refreshController.loadComplete());
   }
+
+  startMeeting()=> AppNavigator.startMeeting();
 }

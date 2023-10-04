@@ -178,11 +178,11 @@ class ConversationPage extends StatelessWidget {
               icon: ImageRes.ic_popLaunchGroup,
               onTap: () => logic.createGroup(),
             ),
-            // PopMenuInfo(
-            //   text: StrRes.meeting,
-            //   icon: ImageRes.ic_popLaunchGroup,
-            //   onTap: () => logic.startMeeting(),
-            // ),
+            PopMenuInfo(
+              text: StrRes.meeting,
+              icon: ImageRes.ic_popLaunchGroup,
+              onTap: () => logic.startMeeting(),
+            ),
           ],
           child: TitleImageButton(
             imageStr: ImageRes.ic_addBlack,
