@@ -169,29 +169,29 @@ class ChatLogic extends GetxController {
             typingTimer?.cancel();
             typingTimer = null;
           }
-        } else {
-          //直播逻辑处理更新群头像
-          if (message.contentType == MessageType.StartLivingNotification) {
-            //直播消息
-            channelID.value = message.liveID!;
-          } else if (message.contentType ==
-              MessageType.CloseLivingNotification) {
-            channelID.value = "";
-          }
+        // } else {
+        //   //直播逻辑处理更新群头像
+        //   if (message.contentType == MessageType.StartLivingNotification) {
+        //     //直播消息
+        //     channelID.value = message.liveID!;
+        //   } else if (message.contentType ==
+        //       MessageType.CloseLivingNotification) {
+        //     channelID.value = "";
+        //   }
 
-          if (!messageList.contains(message)) {
-            messageList.add(message);
-            // ios 退到后台再次唤醒消息乱序
-            messageList.sort((a, b) {
-              if (a.sendTime! > b.sendTime!) {
-                return 1;
-              } else if (a.sendTime! > b.sendTime!) {
-                return -1;
-              } else {
-                return 0;
-              }
-            });
-          }
+        //   if (!messageList.contains(message)) {
+        //     messageList.add(message);
+        //     // ios 退到后台再次唤醒消息乱序
+        //     messageList.sort((a, b) {
+        //       if (a.sendTime! > b.sendTime!) {
+        //         return 1;
+        //       } else if (a.sendTime! > b.sendTime!) {
+        //         return -1;
+        //       } else {
+        //         return 0;
+        //       }
+        //     });
+        //   }
         }
       }
     };
