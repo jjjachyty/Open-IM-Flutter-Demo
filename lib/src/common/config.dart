@@ -53,7 +53,7 @@ class Config {
   /// ip
   /// web.rentsoft.cn
   /// test-web.rentsoft.cn
-  static const host = "push131.com";
+  static const host = "18.163.198.204";
 
   static bool get isIP => RegexUtil.isIP(host);
 

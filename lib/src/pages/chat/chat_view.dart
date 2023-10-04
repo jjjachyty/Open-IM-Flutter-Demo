@@ -120,7 +120,7 @@ class ChatPage extends StatelessWidget {
                         ? logic.groupInfo!.value.memberCount
                         : null,
                     subTitle: logic.getSubTile(),
-                    isLiving: logic.channelID.value != "",
+                    isLiving: false,
                     goLiving: logic.goWatchLiving,
                     onClickCallBtn: () => logic.call(),
                     onClickMoreBtn: () => logic.chatSetup(),
