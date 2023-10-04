@@ -39,10 +39,12 @@ class GroupMemberListLogic extends GetxController {
     var list = await im.OpenIM.iMManager.groupManager.getGroupMemberListMap(
       groupId: gid,
     );
-    var l = list.map((e) => GroupMembersInfo.fromJson(e));
-    memberList.addAll(l);
-    IMUtil.convertToAZList(memberList);
+    if (list is List) {
+      var l = list.map((e) => GroupMembersInfo.fromJson(e));
+      memberList.addAll(l);
+      IMUtil.convertToAZList(memberList);
     }
+  }
 
   void selectedMember(index) async {
     var info = memberList.elementAt(index);

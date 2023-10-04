@@ -7,6 +7,7 @@ import 'package:openim_demo/src/res/styles.dart';
 import 'package:openim_demo/src/widgets/button.dart';
 import 'package:openim_demo/src/widgets/name_input_box.dart';
 import 'package:openim_demo/src/widgets/phone_input_box.dart';
+import 'package:openim_demo/src/widgets/titlebar.dart';
 import 'package:openim_demo/src/widgets/touch_close_keyboard.dart';
 
 import 'register_logic.dart';

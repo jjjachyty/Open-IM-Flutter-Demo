@@ -200,6 +200,7 @@ class GroupMemberManagerPage extends StatelessWidget {
     required String icon,
     required String label,
     String? onlineStatus,
+    Function()? onTap,
   }) =>
       Container(
         height: 64.h,

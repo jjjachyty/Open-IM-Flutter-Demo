@@ -5,9 +5,11 @@ import 'package:azlistview/azlistview.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:crypto/crypto.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:flutter_openim_widget/flutter_openim_widget.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -542,10 +544,10 @@ class IMUtil {
     if (Platform.isIOS) {
       DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
       IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-      var iPad = iosInfo.utsname.machine.toLowerCase().contains("ipad");
+      var iPad = iosInfo.utsname.machine?.toLowerCase().contains("ipad");
 
       if (iPad != true) {
-        iPad = iosInfo.model.toLowerCase() == "ipad";
+        iPad = iosInfo.model?.toLowerCase() == "ipad";
       }
 
       return iPad == true ? 9 : 1;

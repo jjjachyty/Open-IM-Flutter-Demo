@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:collection/collection.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_openim_widget/flutter_openim_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,6 +15,7 @@ import 'package:just_audio/just_audio.dart';
 import 'package:openim_demo/src/common/apis.dart';
 import 'package:openim_demo/src/core/controller/im_controller.dart';
 import 'package:openim_demo/src/models/contacts_info.dart';
+import 'package:openim_demo/src/pages/chat/group_setup/group_setup_logic.dart';
 import 'package:openim_demo/src/pages/conversation/conversation_logic.dart';
 import 'package:openim_demo/src/pages/select_contacts/select_contacts_logic.dart';
 import 'package:openim_demo/src/res/strings.dart';
@@ -742,7 +744,7 @@ class ChatLogic extends GetxController {
   /// 触摸其他地方强制关闭工具箱
   void closeToolbox() {
     forceCloseToolbox.addSafely(true);
-    playingIndex.value = -1;
+    playingIndex?.value = -1;
   }
 
   /// 打开地图
@@ -855,7 +857,7 @@ class ChatLogic extends GetxController {
   }
 
   bool isPlayingSound(int index) {
-    return index == playingIndex.value;
+    return index == playingIndex?.value;
   }
 
   /// 处理消息点击事件
@@ -879,8 +881,8 @@ class ChatLogic extends GetxController {
       //   await markC2CMessageAsRead(index, msg, true);
       // }
       for (var i = index; i < messageList.length; i++) {
-        playingIndex.value = messageList.length - i - 1;
-        if ((playingIndex.value ?? -1) < 0) break;
+        playingIndex?.value = messageList.length - i - 1;
+        if ((playingIndex?.value ?? -1) < 0) break;
 
         if (i != index && msg.isRead!) {
           break;
@@ -903,7 +905,7 @@ class ChatLogic extends GetxController {
 
         // await IMUtil.openVoice(msg);
       }
-      playingIndex.value = -1;
+      playingIndex?.value = -1;
     } else if (msg.contentType == MessageType.file) {
       IMUtil.openFile(msg);
     } else if (msg.contentType == MessageType.card) {
@@ -1057,7 +1059,7 @@ class ChatLogic extends GetxController {
   /// 退出界面前处理
   exit() async {
     player.stop();
-    playingIndex.value = -1;
+    playingIndex?.value = -1;
     if (multiSelMode.value) {
       closeMultiSelMode();
       return false;

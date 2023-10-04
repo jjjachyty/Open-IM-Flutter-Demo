@@ -29,12 +29,14 @@ class GroupSetupLogic extends GetxController {
     var list = await OpenIM.iMManager.groupManager
         .getGroupMemberListMap(groupId: info.value.groupID);
 
-    var l = list.map((e) => en.GroupMembersInfo.fromJson(e));
-    memberList.assignAll(l);
-    info.update((val) {
-      val?.memberCount = l.length;
-    });
+    if (list is List) {
+      var l = list.map((e) => en.GroupMembersInfo.fromJson(e));
+      memberList.assignAll(l);
+      info.update((val) {
+        val?.memberCount = l.length;
+      });
     }
+  }
 
   getGroupInfo() async {
     var list = await OpenIM.iMManager.groupManager.getGroupsInfo(
