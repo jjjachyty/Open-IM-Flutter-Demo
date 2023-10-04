@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:openim/pages/meeting/meet_logic.dart';
+import 'package:openim_demo/src/pages/meeting/meet_logic.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 

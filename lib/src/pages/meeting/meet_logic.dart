@@ -5,7 +5,7 @@ import 'package:flutter_openim_sdk/src/models/user_info.dart' as model;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:openim_common/openim_common.dart';
+import 'package:openim_demo/src/utils/data_persistence.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -21,7 +21,7 @@ class MeetingLogic extends GetxController {
   @override
   void onInit() {
     [Permission.microphone, Permission.camera].request();
-    meetingID = DataSp.getLoginCertificate()!.userID;
+    meetingID = DataPersistence.getLoginCertificate()!.userID;
     // var arguments = Get.arguments;
 
 late final PlatformWebViewControllerCreationParams params;
